@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Endereco</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h3>Enderecos cadastrados</h3>
+        <ul id="listaEnderecos"></ul>
+
+        <div class="modal" id="modalCadastro">
+            <div class="modal-content">
+                <h2>Cadastrar Endereco</h2>
+                <input type="text" id="nomeRua" placeholder="Nome da Rua" />
+                <input type="number" id="numero" placeholder="Numero do Local" />
+                <input type="text" id="complemento" placeholder="Complemento" />
+                <input type="number" id="cep" placeholder="CEP (sem o '-')" />
+                <div class="modal-buttons">
+                    <button onclick="fecharModal()">Cancelar</button>
+                    <button onclick="confirmarCadastro()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalEdicao">
+            <div class="modal-content">
+                <h2>Editar Endereço</h2>
+                <input type="text" id="ruaEdicao" placeholder="Nome da Rua" />
+                <input type="number" id="numeroEdicao" placeholder="Numero do Local" />
+                <input type="text" id="complementoEdicao" placeholder="Complemento" />
+                <input type="number" id="cepEdicao" placeholder="CEP (sem o '-'')" />
+                <div class="modal-buttons">
+                    <button onclick="fecharEdicao()">Cancelar</button>
+                    <button onclick="salvarEndereco()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+         <div class="modal" id="modalView">
+    <div class="modal-content">
+        <h2>Endereço</h2>
+        <div class="info-item">
+            <strong>Rua:</strong> <span id="viewNomeRua">Avenida Exemplo</span>
+        </div>
+        <div class="info-item">
+            <strong>Número:</strong> <span id="viewNumero">123</span>
+        </div>
+        <div class="info-item">
+            <strong>Complemento:</strong> <span id="viewComplemento">Apto 45</span>
+        </div>
+        <div class="info-item">
+            <strong>CEP:</strong> <span id="viewCep">12345-678</span>
+        </div>
+        <div class="modal-buttons">
+            <button onclick="fecharView()">Fechar</button>
+        </div>
+    </div>
+</div>
+
+        <div class="botoes-piso">
+            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
+        </div>
+
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

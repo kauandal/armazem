@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de CNPJ</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h3>CNPJs cadastrados</h3>
+        <ul id="listaCNPJ"></ul>
+
+        <div class="modal" id="modalCadastro">
+            <div class="modal-content">
+                <h2>Cadastrar CNPJ</h2>
+                <input type="text" id="nomeCNPJ" placeholder="Numero do CNPJ" />
+                <div class="modal-buttons">
+                    <button onclick="fecharModal()">Cancelar</button>
+                    <button onclick="confirmarCadastro()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalEdicao">
+            <div class="modal-content">
+                <h2>Editar CNPJ</h2>
+                <input type="text" id="cnpjEdicao" placeholder="Numero do CNPJ" />
+                <div class="modal-buttons">
+                    <button onclick="fecharEdicao()">Cancelar</button>
+                    <button onclick="salvaCnpj()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes-piso">
+            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
+        </div>
+
+
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
