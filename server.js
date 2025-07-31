@@ -48,15 +48,12 @@ app.put('/cidades/:id', async (req, res) => {
     const { nome } = req.body;
     const { estado } = req.body;
 
-   
-
     if (!nome || nome.trim() === "" || !estado || estado.trim() === "") {
         return res.status(400).json({ erro: 'Nome inválido.' });
     }
 
     cidades.put(nome, estado, id);
     return res.status(200).json({ mensagem: 'Cidade atualizada com sucesso.' });
-
 
 });
 
@@ -174,6 +171,6 @@ app.put('/empresa/:id', async (req, res) => {
     if (!nome || nome.trim() === "" || !cidade || cidade.trim() === "" || !cnpj || cnpj.trim() === "") {
         return res.status(400).json({ erro: 'Nome inválido.' });
     }
-   empresas.put(id, nome, cidade, estado, cnpj, rua, numero, complemento, cep);
+    empresas.put(id, nome, cidade, estado, cnpj, rua, numero, complemento, cep);
     return res.status(200).json({ mensagem: 'Empresa atualizada com sucesso.' });
 });

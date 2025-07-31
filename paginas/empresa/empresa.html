@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro Principal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>Cadastro Empresa</h2>
+    <a href="#" onclick="loadPage('../cadastro_empresa/cadastro_empresa.html')">Empresa</a>
+    <a href="#" onclick="loadPage('../cadastro_cidade/cadastro_cidade.html')">Cidade</a>
+    <a href="#" onclick="loadPage('../cadastro_cnpj/cadastro_cnpj.html')">CNPJ</a>
+    <a href="#" onclick="loadPage('../cadastro_endereco/cadastro_endereco.html')">Endereço</a>
+  </div>
+
+  <div class="content">
+    <iframe id="mainFrame" src="../cadastro_cidade/cadastro_cidade.html"></iframe>
+  </div>
+
+  <script>
+    function loadPage(page) {
+      document.getElementById("mainFrame").src = page;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,29 +1,31 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Cadastro Principal</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armazém</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <div class="sidebar">
-    <h2>Cadastro</h2>
-    <a href="#" onclick="loadPage('cadastro_cidade/cidade.html')">Cidade</a>
-    <a href="#" onclick="loadPage('cadastro_cnpj/cnpj.html')">CNPJ</a>
-    <a href="#" onclick="loadPage('cadastro_endereco/endereco.html')">Endereço</a>
-    <a href="#" onclick="loadPage('cadastro_empresa/empresa.html')">Empresa</a>
-  </div>
+    <div class="sidebar">
+        <h2>Armazém</h2>
+        <a href="#" onclick="loadPage('/paginas/empresa/empresa.html')">Empresa</a>
+        <a href="#" onclick="loadPage('/paginas/usuarios/usuarios.html')">Usuarios</a>
+    </div>
 
-  <div class="content">
-    <iframe id="mainFrame" src="Cadastro_Cidade/cidade.html"></iframe>
-  </div>
+    <div class="content">
+        <iframe id="mainFrame" src="/paginas/empresa/empresa.html"></iframe>
+    </div>
 
-  <script>
-    function loadPage(page) {
-      document.getElementById("mainFrame").src = page;
-    }
-  </script>
+    <script>
+        function loadPage(page) {
+            document.getElementById("mainFrame").src = page;
+        }
+    </script>
 
 </body>
+
 </html>
