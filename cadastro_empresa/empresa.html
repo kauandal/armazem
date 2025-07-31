@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Empresa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h3>Empresas cadastrados</h3>
+        <ul id="listaEmpresa"></ul>
+
+        <div class="modal" id="modalCadastro">
+            <div class="modal-content">
+                <h2>Cadastrar Empresa</h2>
+                <input type="text" id="cadastraNome" placeholder="Nome da Empresa" />
+                <input type="text" id="cadastraCidade" list="listaCidades" placeholder="Selecione a cidade" />
+                <datalist id="listaCidades"></datalist>
+                <input type="text" id="cadastraCnpj" list="listaCnpjs" placeholder="Selecione o cnpj" />
+                <datalist id="listaCnpjs"></datalist>
+                <input type="text" id="cadastraEndereco" list="listaEnderecos" placeholder="Selecione o Endereco" />
+                <datalist id="listaEnderecos"></datalist>
+
+                <div class="modal-buttons">
+                    <button onclick="fecharModal()">Cancelar</button>
+                    <button onclick="confirmarCadastro()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalEdicao">
+            <div class="modal-content">
+                <h2>Editar Empresa</h2>
+                <input type="text" id="nomeEdicao" placeholder="Nome da empresa" />
+                <input type="text" id="cidadeEdicao" list="listaCidades" placeholder="Nome da Cidade" />
+                <input type="text" id="cnpjEdicao" list="listaCnpjs" placeholder="CNPJ" />
+                <input type="text" id="enderecoEdicao" list="listaEnderecos" placeholder="Endereco"/>
+                <div class="modal-buttons">
+                    <button onclick="fecharEdicao()">Cancelar</button>
+                    <button onclick="salvaEmpresa()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalView">
+            <div class="modal-content">
+                <h2>Empresa</h2>
+                <div class="info-item">
+                    <strong>Cidade:</strong> <span id="viewCidade"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Estado:</strong> <span id="viewEstado"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Cnpj:</strong> <span id="viewCnpj"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Rua:</strong> <span id="viewRua"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Número:</strong> <span id="viewNumero"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Complemento:</strong> <span id="viewComplemento"></span>
+                </div>
+                <div class="info-item">
+                    <strong>Cep:</strong> <span id="viewCep"></span>
+                </div>
+                <div class="modal-buttons">
+                    <button onclick="fecharView()">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes-piso">
+            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
+        </div>
+
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

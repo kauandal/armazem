@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Cidade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h3>Cidades Cadastradas</h3>
+        <ul id="listaCidades"></ul>
+
+        <div class="modal" id="modalCadastro">
+            <div class="modal-content">
+                <h2>Cadastrar Cidade</h2>
+                <input type="text" id="nomeCidade" placeholder="Nome da cidade" />
+                <input type="text" id="estadoCidade" placeholder="Estado" />
+                <div class="modal-buttons">
+                    <button onclick="fecharModal()">Cancelar</button>
+                    <button onclick="confirmarCadastro()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalEdicao">
+            <div class="modal-content">
+                <h2>Editar Cidade</h2>
+                <input type="text" id="nomeEdicao" placeholder="Nome da cidade" />
+                <input type="text" id="estadoEdicao" placeholder="Estado" />
+                <div class="modal-buttons">
+                    <button onclick="fecharEdicao()">Cancelar</button>
+                    <button onclick="salvaCidade()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes-piso">
+            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
+        </div>
+
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
