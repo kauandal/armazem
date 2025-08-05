@@ -9,10 +9,10 @@ const usuarios = require('./helper/usuarios')
 const ip = "localhost";
 const port = 8080;
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());
+
 
 app.listen(port, ip, () => {
     console.log(`Servidor rodando em http://${ip}:${port}`);
@@ -190,8 +190,8 @@ app.get('/usuarios', async (req, res) => {
 });
 
 app.post('/cadastrar-usuario', async (req, res) => {
-    const { nome, senha, email } = req.body;
-    if (usuarios.create(nome, senha, email) === "Erro ao cadastrar Usuario") {
+    const { nome, hash, email, imagem, permissao } = req.body;
+    if (usuarios.create(nome, hash, email, imagem, permissao) === "Erro ao cadastrar Usuario") {
         return res.status(400).json({ erro: 'Erro ao cadastrar usuario' });
     } else {
         return res.status(200).json({ mensagem: 'Usuario cadastrado com sucesso.' })
@@ -208,3 +208,32 @@ app.delete('/usuario/:id', async (req, res) => {
         return res.status(200).json({ mensagem: 'Usuario deletado com sucesso.' })
     }
 });
+
+app.put('/usuario/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { nome, hash, email } = req.body;
+
+    if (!nome || nome.trim() === "" || !hash || hash.trim() === "" || !email || email.trim() === "") {
+        return res.status(400).json({ erro: 'campo inválido.' });
+    }
+    usuarios.put(id, nome, hash, email);
+    return res.status(200).json({ mensagem: 'Usuario atualizado com sucesso.' });
+});
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({ error: 'Dados incompletos.' });
+    }
+
+    const resultado = await usuarios.login(username, password); // <-- está chamando a função no usuarios.js
+    
+
+    if (resultado.sucesso) {
+        return res.status(200).json({ success: true, permissao: resultado.permissao });
+    } else {
+        return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
+    }
+});
+

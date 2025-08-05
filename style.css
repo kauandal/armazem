@@ -57,6 +57,12 @@ color: #fff;
     transform: rotate(90deg);
 }
 
+.menu-title.open {
+    background-color: #16a085;
+    color: white;
+}
+
+
 .submenu {
     max-height: 0;
     overflow: hidden;
@@ -96,4 +102,85 @@ iframe {
     width: 100%;
     height: 100%;
     border: none;
+}
+
+body.login-page {
+    background-color: #ecf0f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    background-color: #2c3e50;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    color: white;
+    width: 320px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    border-bottom: 1px solid #1abc9c;
+    padding-bottom: 10px;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.login-container input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #1abc9c;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1abc9c;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #16a085;
+}
+
+#error-msg {
+    margin-top: 10px;
+    color: #e74c3c;
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.logout-btn:hover {
+    background-color: #c0392b;
 }
