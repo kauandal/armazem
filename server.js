@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const cidades = require('./helper/cidades');
-const cnpjs = require('./helper/cnpj');
-const enderecos = require('./helper/endereco');
+const cnpjs = require('./helper/cnpjs');
+const enderecos = require('./helper/enderecos');
 const empresas = require('./helper/empresas');
+const usuarios = require('./helper/usuarios')
 
 const ip = "localhost";
 const port = 8080;
@@ -16,6 +17,9 @@ app.use(cors());
 app.listen(port, ip, () => {
     console.log(`Servidor rodando em http://${ip}:${port}`);
 });
+
+
+//Cidades
 
 app.post('/cadastrar-cidade', async (req, res) => {
     const { nome, estado } = req.body;
@@ -59,6 +63,8 @@ app.put('/cidades/:id', async (req, res) => {
 
 
 
+//CNPJ
+
 app.get('/cnpj', async (req, res) => {
     const listCnpjs = await cnpjs.read();
     res.json(listCnpjs);
@@ -96,7 +102,7 @@ app.put('/cnpj/:id', async (req, res) => {
     return res.status(200).json({ mensagem: 'Cnpj atualizado com sucesso!' });
 });
 
-
+//Endereco
 
 
 app.post('/cadastrar-endereco', async (req, res) => {
@@ -138,7 +144,7 @@ app.put('/endereco/:id', async (req, res) => {
 });
 
 
-
+//Empresa
 
 app.get('/empresas', async (req, res) => {
     const listEmpresas = await empresas.read();
@@ -173,4 +179,32 @@ app.put('/empresa/:id', async (req, res) => {
     }
     empresas.put(id, nome, cidade, estado, cnpj, rua, numero, complemento, cep);
     return res.status(200).json({ mensagem: 'Empresa atualizada com sucesso.' });
+});
+
+
+
+//Usuarios
+app.get('/usuarios', async (req, res) => {
+    const listUsuarios = await usuarios.read();
+    res.json(listUsuarios);
+});
+
+app.post('/cadastrar-usuario', async (req, res) => {
+    const { nome, senha, email } = req.body;
+    if (usuarios.create(nome, senha, email) === "Erro ao cadastrar Usuario") {
+        return res.status(400).json({ erro: 'Erro ao cadastrar usuario' });
+    } else {
+        return res.status(200).json({ mensagem: 'Usuario cadastrado com sucesso.' })
+    }
+
+})
+
+app.delete('/usuario/:id', async (req, res) => {
+    const id = req.params.id;
+    if (usuarios.deletar(id) === 'Erro') {
+        return res.status(400).json({ erro: 'Erro' });
+    }
+    else {
+        return res.status(200).json({ mensagem: 'Usuario deletado com sucesso.' })
+    }
 });

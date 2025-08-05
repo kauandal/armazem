@@ -40,7 +40,6 @@ async function deletar(id) {
 
 async function put(nome, estado, id) {
     try {
-        console.log(id);
         let conn = await pool.getConnection();
         const result = await conn.query('UPDATE cidades SET nome = ?, estado = ?  WHERE id = ?', [nome, estado, id]);
 

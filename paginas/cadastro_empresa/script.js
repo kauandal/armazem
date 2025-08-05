@@ -232,7 +232,7 @@ const salvaEmpresa = () => {
 const updateEmpresa = async (id, novoNome, novaCidade, novoCnpj, novoEndereco) => {
     const { cidadeEncontrada, cnpjEncontrado, ruaEncontrada } = await validaInformacoes(novaCidade, novoCnpj, novoEndereco);
 
-  /*  if (!cidadeEncontrada) {
+   if (!cidadeEncontrada) {
         console.error("Cidade não encontrada.");
         return;
     }
@@ -245,7 +245,7 @@ const updateEmpresa = async (id, novoNome, novaCidade, novoCnpj, novoEndereco) =
     if(!cnpjEncontrado){
         console.error("CNPJ não encontrado");
         return;
-    } */
+    } 
 
     const estado = cidadeEncontrada.estado;
     const numero = ruaEncontrada.numero;

@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usuarios</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <h1>OI</h1>
 
+<body>
+
+    <div class="container">
+
+        <h3>Usuários cadastrados</h3>
+        <ul id="listaUsuarios"></ul>
+
+        <div class="modal" id="modalCadastro">
+            <div class="modal-content">
+                <h2>Cadastrar Usuário</h2>
+                <input type="text" id="nomeUsuario" placeholder="Nome do Usuario" />
+                <input type="text" id="senha" placeholder="Senha" />
+                <input type="text" id="email" placeholder="e-mail" />
+                <input type="file" id="fotoPerfil" accept="image/*"/>
+                <div class="modal-buttons">
+                    <button onclick="fecharModal()">Cancelar</button>
+                    <button onclick="confirmarCadastro()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalEdicao">
+            <div class="modal-content">
+                <h2>Editar Usuário</h2>
+                <input type="text" id="nomeEdicao" placeholder="Nome de Usuario" />
+                <input type="text" id="senhaEdicao" placeholder="Nova senha" />
+                <input type="text" id="emailEdicao" placeholder="E-mail" />
+
+                <div class="modal-buttons">
+                    <button onclick="fecharEdicao()">Cancelar</button>
+                    <button onclick="salvarUsuario()">Salvar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modalView">
+            <div class="modal-content">
+                <h2>Nome</h2>
+                <div class="info-item">
+                    <strong>Nome:</strong> <span id="viewNomeUsuario">Nome Usuario</span>
+                </div>
+                <div class="info-item">
+                    <strong>E-mail:</strong> <span id="viewEmail">exemplo@itscs.com.br</span>
+                </div>
+                <div class="modal-buttons">
+                    <button onclick="fecharView()">Fechar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="botoes-piso">
+            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
 </body>
+
 </html>
