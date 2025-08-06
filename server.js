@@ -231,7 +231,7 @@ app.post('/login', async (req, res) => {
     
 
     if (resultado.sucesso) {
-        return res.status(200).json({ success: true, permissao: resultado.permissao });
+        return res.status(200).json({ success: true, permission: resultado.permission, name: resultado.name, image: resultado.image });
     } else {
         return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
     }

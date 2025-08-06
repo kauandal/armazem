@@ -39,7 +39,9 @@
         }
     })
     .then(data => {
-        sessionStorage.setItem("permission", data.permissao)
+        sessionStorage.setItem("permission", data.permission)
+        sessionStorage.setItem("name", data.name)
+        sessionStorage.setItem("image", data.image)
         sessionStorage.setItem("auth", "true");
         window.location.href = "index.html";
     })

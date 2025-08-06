@@ -4,7 +4,7 @@ const pool = require('../connection/connection').pool;
 async function read() {
     try {
         let conn = await pool.getConnection();
-        const usuarios = await conn.query('SELECT id, nome, hash, email, imagem FROM users ORDER BY nome ASC');
+        const usuarios = await conn.query('SELECT id, nome, email, imagem FROM users ORDER BY nome ASC');
         if (conn) conn.release();
         return usuarios;
 
@@ -62,23 +62,31 @@ async function put(id, nome, hash, email) {
 }
 
 async function login(username, password) {
-    const expectedHash = Buffer.from(`${username}:${password}`).toString('base64');
+    const hashLogin = Buffer.from(`${username}:${password}`).toString('base64');
 
     try {
         const conn = await pool.getConnection();
-        const rows = await conn.query('SELECT * FROM users WHERE hash = ?', [expectedHash]);
+        const rows = await conn.query('SELECT * FROM users WHERE hash = ?', [hashLogin]);
         conn.release();
-            return {
-                sucesso: rows.length > 0,
-                permissao: rows[0].permissao
-            }
-        }
-     catch (err) {
-        console.error('Erro no login:', err);
-        return false;
-    }
 
+        const usuarioEncontrado = rows.length > 0;
+
+        return {
+            sucesso: usuarioEncontrado,
+            permission: usuarioEncontrado ? rows[0].permissao : null,
+            name: usuarioEncontrado ? rows[0].nome : null,
+            image: usuarioEncontrado ? rows[0].imagem : null
+        };
+
+    } catch (err) {
+        console.error('Erro no login:', err);
+        return {
+            sucesso: false,
+            permissao: null
+        };
+    }
 }
+
 
 
 module.exports = { pool, put, read, create, deletar, login }

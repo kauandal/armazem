@@ -14,7 +14,7 @@ const listarUsuarios = () => {
         <span class="nome-usuario">${usuario.nome}</span>
         <div class="botoes-acao">
             <button class="btnView" onclick="verUsuario('${usuario.nome}', '${usuario.email}')">ver</button>
-            <button class="btnUpdate" onclick="abrirUpdate(${usuario.id}, '${usuario.nome}', '${usuario.hash}', '${usuario.email}', '${usuario.imagem}')">E</button>
+            <button class="btnUpdate" onclick="abrirUpdate(${usuario.id}, '${usuario.nome}', '${usuario.email}', '${usuario.imagem}')">E</button>
             <button class="btnDelete" onclick="deleteUsuario(${usuario.id})">X</button>
         </div>
     </div>
@@ -135,7 +135,7 @@ const deleteUsuario = (id) => {
     listarUsuarios();
 };
 
-const abrirUpdate = (id, nomeAtual, senhaAtual, emailAtual, imagemAtual) => {
+const abrirUpdate = (id, nomeAtual, emailAtual, imagemAtual) => {
     document.getElementById("modalEdicao").style.display = "flex";
 
     idUpd = id;
