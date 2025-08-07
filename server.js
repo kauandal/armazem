@@ -5,6 +5,7 @@ const cnpjs = require('./helper/cnpjs');
 const enderecos = require('./helper/enderecos');
 const empresas = require('./helper/empresas');
 const usuarios = require('./helper/usuarios')
+const equipamentos = require('./helper/equipamentos');
 
 const ip = "localhost";
 const port = 8080;
@@ -237,3 +238,14 @@ app.post('/login', async (req, res) => {
     }
 });
 
+
+
+app.post('/cadastrar-equipamento', async (req, res) => {
+    const { categoria, modelo, estado, quantidade, localizacao, marca } = req.body;
+    if (equipamentos.create(categoria, modelo, estado, quantidade, localizacao, marca)  === "Erro ao cadastrar equipamento") {
+        return res.status(400).json({ erro: 'Erro ao cadastrar equipamento' });
+    } else {
+        return res.status(200).json({ mensagem: 'Equipamento cadastrado com sucesso.' })
+    }
+
+})  

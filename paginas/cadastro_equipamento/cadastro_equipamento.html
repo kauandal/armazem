@@ -9,33 +9,38 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="principal">
+        <div class="container">
+            <h2>Cadastrar Equipamento</h2>
+            <input type="text" id="categoria" placeholder="Categoria do Equipamento" />
+            <input type="text" id="modelo" placeholder="Modelo" />
+            <input type="text" id="estado" placeholder="Estado (OK - NF)" />
+            <input type="number" id="qtd" placeholder="Quantidade" />
+             <input type="text" id="local" list="listaEmpresas" placeholder="Localizacao" />
+                <datalist id="listaEmpresas"></datalist>
+            <input type="text" id="marca" placeholder="Marca" />
 
-        <h2>Cadastrar Equipamento</h2>
-        <input type="text" id="categoria" placeholder="Categoria do Equipamento" />
-        <input type="text" id="modelo" placeholder="Modelo" />
-        <input type="text" id="estado" placeholder="Estado (OK - NF)" />
-        <input type="number" id="qtd" placeholder="Quantidade" />
-
-        <div class="botoes-piso">
-            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <div class="botoes-piso">
+                <button type="button" class="botao" onclick="cadastrarEquipamento()">Cadastrar</button>
+            </div>
         </div>
-    </div>
 
-    <div class="container" style="margin-top: 30px;">
+        <div class="container">
+            <h2>Cadastrar Computadores</h2>
+            <input type="text" id="categoriaPC" placeholder="Categoria do Equipamento" />
+            <input type="text" id="modeloPC" placeholder="Modelo" />
+            <input type="text" id="estadoPC" placeholder="Estado (OK - NF)" />
+            <input type="number" id="qtdPC" placeholder="Quantidade" />
 
-        <h2>Cadastrar Computadores</h2>
-        <input type="text" id="categoria" placeholder="Categoria do Equipamento" />
-        <input type="text" id="modelo" placeholder="Modelo" />
-        <input type="text" id="estado" placeholder="Estado (OK - NF)" />
-        <input type="number" id="qtd" placeholder="Quantidade" />
 
-        <div class="botoes-piso">
-            <button type="button" class="botao" onclick="abrirCadastro()">Cadastrar</button>
+            <div class="botoes-piso">
+                <button type="button" class="botao" onclick="cadastrarComputador()">Cadastrar</button>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
+
 
 </html>
