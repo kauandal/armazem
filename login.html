@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Armazém</title>
+    <link rel="stylesheet" href="style.css">
+     <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+    <div class="login-container">
+        <h2>Login</h2>
+        <form onsubmit="login(event)">
+            <input type="text" id="username" placeholder="Usuário" required><br>
+            <input type="password" id="password" placeholder="Senha" required><br>
+            <button type="submit">Entrar</button>
+        </form>
+        <p id="error-msg" style="color:red;"></p>
+    </div>
+
+    <script>
+        function login(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    })
+    .then(res => {
+        if (res.ok) {
+            return res.json();
+        } else {
+            throw new Error("Usuário ou senha inválidos.");
+        }
+    })
+    .then(data => {
+        sessionStorage.setItem("permission", data.permission)
+        sessionStorage.setItem("name", data.name)
+        sessionStorage.setItem("image", data.image)
+        sessionStorage.setItem("auth", "true");
+        window.location.href = "index.html";
+    })
+    .catch(err => {
+        document.getElementById("error-msg").textContent = err.message;
+    });
+}
+
+        // Se já estiver logado, vai direto para o index
+        if (sessionStorage.getItem("auth")) {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+
+</html>

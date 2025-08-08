@@ -18,10 +18,26 @@
         <div class="modal" id="modalCadastro">
             <div class="modal-content">
                 <h2>Cadastrar Usuário</h2>
-                <input type="text" id="nomeUsuario" placeholder="Nome do Usuario" />
+                <input type="text" id="nomeExibicao" placeholder="Nome de Exibição" />
+                <input type="text" id="nomeUsuario" placeholder="Login" />
                 <input type="text" id="senha" placeholder="Senha" />
                 <input type="text" id="email" placeholder="e-mail" />
-                <input type="file" id="fotoPerfil" accept="image/*"/>
+
+                <div class="permissoes">
+                    <label>
+                        <input type="radio" name="permissao" value=0 />
+                        Admin
+                    </label>
+                    <label>
+                        <input type="radio" name="permissao" value=1 />
+                        Editor
+                    </label>
+                    <label>
+                        <input type="radio" name="permissao" value=2 />
+                        Visualizador
+                    </label>
+                </div>
+
                 <div class="modal-buttons">
                     <button onclick="fecharModal()">Cancelar</button>
                     <button onclick="confirmarCadastro()">Salvar</button>
@@ -32,7 +48,8 @@
         <div class="modal" id="modalEdicao">
             <div class="modal-content">
                 <h2>Editar Usuário</h2>
-                <input type="text" id="nomeEdicao" placeholder="Nome de Usuario" />
+                <input type="text" id="nomeEdicao" placeholder="Nome de exibição" />
+                <input type="text" id="loginEdicao" placeholder="Novo Login" />
                 <input type="text" id="senhaEdicao" placeholder="Nova senha" />
                 <input type="text" id="emailEdicao" placeholder="E-mail" />
 
@@ -47,7 +64,7 @@
             <div class="modal-content">
                 <h2>Nome</h2>
                 <div class="info-item">
-                    <strong>Nome:</strong> <span id="viewNomeUsuario">Nome Usuario</span>
+                    <strong>Nome:</strong> <span id="viewNomeUsuario">Nome de Exibição</span>
                 </div>
                 <div class="info-item">
                     <strong>E-mail:</strong> <span id="viewEmail">exemplo@itscs.com.br</span>
@@ -63,6 +80,12 @@
             <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
         </div>
 
+    </div>
+
+    <div class="container2">
+        <p>Admin: têm acesso a tudo.</p>
+        <p>Editor: pode ver e editar os itens do estoque.</p>
+        <p>Visualizador: só vê os itens das unidades atribuidas à ele.</p>
     </div>
     <script src="script.js"></script>
 </body>

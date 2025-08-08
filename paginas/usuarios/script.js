@@ -14,7 +14,7 @@ const listarUsuarios = () => {
         <span class="nome-usuario">${usuario.nome}</span>
         <div class="botoes-acao">
             <button class="btnView" onclick="verUsuario('${usuario.nome}', '${usuario.email}')">ver</button>
-            <button class="btnUpdate" onclick="abrirUpdate(${usuario.id}, '${usuario.nome}', '${usuario.senha}', '${usuario.email}', '${usuario.imagem}')">E</button>
+            <button class="btnUpdate" onclick="abrirUpdate(${usuario.id}, '${usuario.nome}', '${usuario.email}', '${usuario.imagem}')">E</button>
             <button class="btnDelete" onclick="deleteUsuario(${usuario.id})">X</button>
         </div>
     </div>
@@ -52,25 +52,27 @@ const abrirCadastro = () => {
 const fecharModal = () => {
     document.getElementById("modalCadastro").style.display = "none";
 
+    document.getElementById("nomeExibicao").value = "";
     document.getElementById("nomeUsuario").value = "";
     document.getElementById("senha").value = "";
     document.getElementById("email").value = "";
-    document.getElementById("fotoPerfil").value = "";
+
 };
 
 const confirmarCadastro = () => {
-    const nome = document.getElementById("nomeUsuario").value;
+    const nome = document.getElementById("nomeExibicao").value;
+    const login = document.getElementById("nomeUsuario").value;
     const senha = document.getElementById("senha").value;
     const email = document.getElementById("email").value;
-
+    const imagem = '/imagens/user_padrao.jpeg'
 
     if (!nome || nome.trim() === "") {
         alert("Por favor, informe o nome da nome.");
         return;
     }
 
-    if (!senha || senha.trim()==="") {
-        alert("Por favor, informe a senha.");
+    if (!login || login.trim() === "" || !senha || senha.trim() === "") {
+        alert("Por favor, informe o login e senha.");
         return;
     }
 
@@ -79,18 +81,28 @@ const confirmarCadastro = () => {
         return;
     }
 
+    const permissaoSelecionada = document.querySelector('input[name="permissao"]:checked');
+    if (!permissaoSelecionada) {
+        alert("Por favor, selecione uma permissão.");
+        return;
+    }
+    const permissao = permissaoSelecionada.value;
 
-    enviarUsuario(nome.trim(), senha.trim(), email.trim());
+
+    const hash = login.trim() + ":" + senha.trim();
+    const code_hash = btoa(hash);
+
+    enviarUsuario(nome.trim(), code_hash, email.trim(), imagem, permissao);
     fecharModal();
 };
 
-const enviarUsuario = (nome, senha, email) => {
+const enviarUsuario = (nome, hash, email, imagem, permissao) => {
     fetch('http://localhost:8080/cadastrar-usuario', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome, senha, email })  // transforma { nome: "..." } em JSON
+        body: JSON.stringify({ nome, hash, email, imagem, permissao })  // transforma { nome: "..." } em JSON
     })
         .then(res => res.json())
 
@@ -119,4 +131,77 @@ const deleteUsuario = (id) => {
         .catch(err => {
             console.error("erro na exclusão", err);
         });
+
+    listarUsuarios();
 };
+
+const abrirUpdate = (id, nomeAtual, emailAtual, imagemAtual) => {
+    document.getElementById("modalEdicao").style.display = "flex";
+
+    idUpd = id;
+    const nomeModal = document.getElementById('nomeEdicao');
+    const emailModal = document.getElementById('emailEdicao');
+
+    nomeModal.value = nomeAtual;
+    emailModal.value = emailAtual;
+
+}
+
+const salvarUsuario = () => {
+    const nomeAtt = document.getElementById('nomeEdicao').value;
+    const loginAtt = document.getElementById('loginEdicao').value;
+    const senhaAttt = document.getElementById('senhaEdicao').value;
+    const emailAtt = document.getElementById('emailEdicao').value;
+
+    updateUsuario(idUpd, nomeAtt, loginAtt, senhaAttt, emailAtt);
+    fecharEdicao();
+}
+
+const updateUsuario = (id, novoNome, novoLogin, novaSenha, novoEmail) => {
+    if (!novoNome || novoNome.trim() === "") {
+        alert("Por favor, informe o nome do Usuário.");
+        return;
+    }
+
+    if (!novaSenha || !novoLogin || novoLogin.trim() === "" || novaSenha.trim() === "") {
+        alert("Por favor, informe o novo login e Senha");
+        return;
+    }
+
+    if (!novoEmail || novoEmail.trim() === "") {
+        alert("Por favor, informe o email.");
+        return;
+    }
+
+    const hash = novoLogin.trim() + ":" + novaSenha.trim();
+    const code_hash = btoa(hash);
+
+    fetch(`http://localhost:8080/usuario/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nome: novoNome,
+            hash: code_hash,
+            email: novoEmail
+        })
+    })
+        .then(res => {
+            if (res.ok) {
+                listarUsuarios();
+            } else {
+                console.error("Erro ao atualizar usuarios");
+            }
+        })
+        .catch(err => {
+            console.error("Erro na atualização", err);
+        });
+};
+
+const fecharEdicao = () => {
+    document.getElementById("modalEdicao").style.display = "none";
+    document.getElementById("nomeEdicao").value = "";
+    document.getElementById("senhaEdicao").value = "";
+    document.getElementById("emailEdicao").value = "";
+}

@@ -13,7 +13,16 @@
     <div class="sidebar">
         <h2>Armazém</h2>
 
-        <div class="menu">
+        <div class="menu" id="estoque">
+            <div class="menu-title" onclick="toggleSubmenu(this)">Estoque
+            </div>
+            <div class="submenu">
+                <a href="#" onclick="loadPage('/paginas/visualizacao/visualizacao.html')">Visualização</a>
+                <a href="#" id="cadastrar_equipamento" onclick="loadPage('/paginas/cadastro_equipamento/cadastro_equipamento.html')">Cadastro Equipamento</a>
+            </div>
+        </div>
+
+        <div class="menu" id="empresa">
             <div class="menu-title" onclick="toggleSubmenu(this)">Empresa</div>
             <div class="submenu">
                 <a href="#" onclick="loadPage('/paginas/cadastro_empresa/cadastro_empresa.html')">Empresa</a>
@@ -23,40 +32,40 @@
             </div>
         </div>
 
-        <div class="menu">
+        <div class="menu" id="usuarios">
             <div class="menu-title" onclick="toggleSubmenu(this)">Usuários</div>
             <div class="submenu">
                 <a href="#" onclick="loadPage('/paginas/usuarios/usuarios.html')">Cadastrar</a>
-
+                <a href="#" onclick="loadPage('/paginas/permissoes/permissoes.html')">Permissões</a>
             </div>
         </div>
+
+        <!-- <div class="menu" id="configuracoes">
+            <div class="menu-title" onclick="toggleSubmenu(this)">Configurações</div>
+            <div class="submenu">
+                <a href="#" onclick="loadPage('/paginas/configuracoes/configuracoes.html')"></a>
+        </div>
+        </div>  
+    -->
+
+       <div class="sidebar-footer">
+    <div class="user-box">
+        <img id="imagemUsuario" class="imagem-usuario" src="" alt="Foto de perfil">
+        <span id="nomeUsuario" class="nome-usuario"></span>
+    </div>
+
+    <button class="logout-btn" onclick="logout()">Sair</button>
+</div>
+
     </div>
 
     <div class="content">
-        <iframe id="mainFrame" src="\paginas\cadastro_empresa\cadastro_empresa.html"></iframe>
+        <iframe id="mainFrame" src="/paginas/cadastro_empresa/cadastro_empresa.html"></iframe>
+
     </div>
 
-    <script>
-        const loadPage = (page) => {
-            document.getElementById("mainFrame").src = page;
-        }
 
-        const toggleSubmenu = (element) => {
-    const submenu = element.nextElementSibling;
-    const isActive = submenu.classList.contains("active");
-
-    // Fecha todos os outros
-    document.querySelectorAll(".submenu").forEach(el => el.classList.remove("active"));
-    document.querySelectorAll(".menu-title").forEach(el => el.classList.remove("open"));
-
-    // Abre o clicado, se estava fechado
-    if (!isActive) {
-        submenu.classList.add("active");
-        element.classList.add("open");
-    }
-}
-    </script>
-
+    <script src="script.js"></script>
 </body>
 
 </html>
