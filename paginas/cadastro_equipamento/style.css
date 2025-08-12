@@ -90,3 +90,7 @@ input {
     transform: translateY(0);
   }
 }
+
+#message{
+  color: #27ae60;
+}

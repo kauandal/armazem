@@ -6,6 +6,7 @@ const enderecos = require('./helper/enderecos');
 const empresas = require('./helper/empresas');
 const usuarios = require('./helper/usuarios')
 const equipamentos = require('./helper/equipamentos');
+const computadores = require('./helper/computadores');
 
 const ip = "localhost";
 const port = 8080;
@@ -152,6 +153,11 @@ app.get('/empresas', async (req, res) => {
     res.json(listEmpresas);
 });
 
+app.get('/nomesEmpresas', async (req, res) => {
+    const listaEmpresas = await empresas.nomes();
+    res.json(listaEmpresas);
+});
+
 app.delete('/empresa/:id', async (req, res) => {
     const id = req.params.id;
     if (empresas.deletar(id) === 'Erro') {
@@ -242,10 +248,39 @@ app.post('/login', async (req, res) => {
 
 app.post('/cadastrar-equipamento', async (req, res) => {
     const { categoria, modelo, estado, quantidade, localizacao, marca } = req.body;
-    if (equipamentos.create(categoria, modelo, estado, quantidade, localizacao, marca)  === "Erro ao cadastrar equipamento") {
-        return res.status(400).json({ erro: 'Erro ao cadastrar equipamento' });
-    } else {
-        return res.status(200).json({ mensagem: 'Equipamento cadastrado com sucesso.' })
-    }
 
-})  
+    try {
+        const resultado = await equipamentos.create(categoria, modelo, estado, quantidade, localizacao, marca);
+
+        if (resultado.mensagem === "Erro ao cadastrar equipamento") {
+            return res.status(400).json({ erro: resultado.mensagem });
+        } else {
+            return res.status(200).json({ mensagem: resultado.mensagem });
+        }
+    } catch (err) {
+        console.error("Erro inesperado:", err);
+        return res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+});
+
+app.post('/cadastrar-computador', async (req, res) => {
+    const { categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao } = req.body;
+
+    try {
+        const resultado = await computadores.create(categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao);
+
+        if (resultado.mensagem === "Erro ao cadastrar computador") {
+            return res.status(400).json({ erro: resultado.mensagem });
+        } else {
+            return res.status(200).json({ mensagem: resultado.mensagem });
+        }
+    } catch (err) {
+        console.error("Erro inesperado:", err);
+        return res.status(500).json({ erro: "Erro interno do servidor" });
+    }
+});
+
+app.get('/equipamentos', async (req, res) => {
+    const listEquipamentos = await equipamentos.read();
+    res.json(listEquipamentos);
+});

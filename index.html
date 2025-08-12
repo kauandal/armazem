@@ -11,14 +11,22 @@
 <body>
 
     <div class="sidebar">
-        <h2>Armazém</h2>
+        <div class="logo-container">
+            <h2>Armazém</h2>
+           <img class="logoIts" src="/imagens/logoIts.jpeg" loading="auto" width = "108" height="44">
+        </div>
 
         <div class="menu" id="estoque">
             <div class="menu-title" onclick="toggleSubmenu(this)">Estoque
             </div>
             <div class="submenu">
-                <a href="#" onclick="loadPage('/paginas/visualizacao/visualizacao.html')">Visualização</a>
-                <a href="#" id="cadastrar_equipamento" onclick="loadPage('/paginas/cadastro_equipamento/cadastro_equipamento.html')">Cadastro Equipamento</a>
+                <a href="#" onclick="loadPage('/paginas/visualizacao/visualizacao.html')">Visualização Equipamentos</a>
+                <a href="#"
+                    onclick="loadPage('/paginas/visualizacaoComputadores/visualizacaoComputadores.html')">Visualização
+                    Pcs</a>
+                <a href="#" id="cadastrar_equipamento"
+                    onclick="loadPage('/paginas/cadastro_equipamento/cadastro_equipamento.html')">Cadastro
+                    Equipamento</a>
             </div>
         </div>
 
@@ -40,27 +48,19 @@
             </div>
         </div>
 
-        <!-- <div class="menu" id="configuracoes">
-            <div class="menu-title" onclick="toggleSubmenu(this)">Configurações</div>
-            <div class="submenu">
-                <a href="#" onclick="loadPage('/paginas/configuracoes/configuracoes.html')"></a>
+        <div class="sidebar-footer">
+            <div class="user-box">
+                <img id="imagemUsuario" class="imagem-usuario" src="" alt="Foto de perfil">
+                <span id="nomeUsuario" class="nome-usuario"></span>
+            </div>
+
+            <button class="logout-btn" onclick="logout()">Sair</button>
         </div>
-        </div>  
-    -->
-
-       <div class="sidebar-footer">
-    <div class="user-box">
-        <img id="imagemUsuario" class="imagem-usuario" src="" alt="Foto de perfil">
-        <span id="nomeUsuario" class="nome-usuario"></span>
-    </div>
-
-    <button class="logout-btn" onclick="logout()">Sair</button>
-</div>
 
     </div>
 
     <div class="content">
-        <iframe id="mainFrame" src="/paginas/cadastro_empresa/cadastro_empresa.html"></iframe>
+        <iframe id="mainFrame" src="/paginas/visualizacao/visualizacao.html"></iframe>
 
     </div>
 

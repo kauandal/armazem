@@ -3,7 +3,7 @@ const pool = require('../connection/connection').pool;
 async function read() {
     try {
         let conn = await pool.getConnection();
-        const equipamentos = await conn.query('SELECT id, categoria, modelo, estado, quantidade FROM equipamentos ORDER BY categoria ASC');
+        const equipamentos = await conn.query('SELECT id, categoria, modelo, estado, quantidade, localizacao, marca FROM equipamentos ORDER BY categoria ASC');
         if (conn) conn.release();
         return equipamentos;
 
@@ -29,6 +29,7 @@ async function create(categoria, modelo, estado, quantidade, localizacao, marca)
         return { mensagem: "Erro ao cadastrar equipamento" };
     }
 }
+
 
 
 module.exports = { pool, read, create }
