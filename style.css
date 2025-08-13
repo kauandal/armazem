@@ -1,14 +1,35 @@
 .logo-container {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column; /* Para empilhar o texto e a imagem */
+    align-items: center;    /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    padding: 20px;
     margin-bottom: 20px;
-    padding-bottom: 10px;
     border-bottom: 1px solid #444;
+    background-image: url('/imagens/armazem.jpeg');
+     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 70px; 
+    
+}
+
+.logo-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 43, 68, 0.7); /* Cor de fundo com transparência */
+    z-index: 0;
+}
+
+.logo-container > * {
+    position: relative;
+    z-index: 1;
 }
 
 .logo-container h2 {
-    font-size: 20px;
+    font-size: 28px;
     margin: 0;
     line-height: 1;
     /* Garante melhor alinhamento vertical */
@@ -40,10 +61,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* <- Isso posiciona o rodapé no fim */
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    position: relative; /* Para empilhar conteúdo corretamente */
 }
+
+
 .menu {
     margin-bottom: 10px;
 }

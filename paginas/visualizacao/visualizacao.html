@@ -28,12 +28,27 @@
             </tbody>
         </table>
 
-
-
     </div>
 
     <div class="botoes-piso">
         <button type="button" class="botao" id="btnAtualizar">Atualizar</button>
+    </div>
+
+    <div class="modal" id="modalEdicao">
+        <div class="modal-content">
+            <h2>Editar Equipamento</h2>
+            <input type="text" id="categoriaEdicao" placeholder="Categoria do Equipamento" />
+            <input type="text" id="modeloEdicao" placeholder="Modelo do Equipamento" />
+            <input type="text" id="estadoEdicao" placeholder="Estado do Equipamento" />
+            <input type="number" id="quantidadeEdicao" placeholder="Quantidade do Equipamento" />
+            <input type="text" id="localizacaoEdicao" list="listaEmpresas" placeholder="Localizacao do Equipamento" />
+             <datalist id="listaEmpresas"></datalist>
+            <input type="text" id="marcaEdicao" placeholder="Marca do Equipamento" />
+            <div class="modal-buttons">
+                <button onclick="fecharEdicao()">Cancelar</button>
+                <button onclick="salvaEquipamento()">Salvar</button>
+            </div>
+        </div>
     </div>
 
 

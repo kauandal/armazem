@@ -30,6 +30,31 @@ async function create(categoria, modelo, estado, quantidade, localizacao, marca)
     }
 }
 
+async function deletar(id) {
+    try {
+        let conn = await pool.getConnection();
+        await conn.query('DELETE FROM equipamentos WHERE id = ?', [id]);
+        if (conn) conn.release();
+        return { mensagem: 'Equipamento excluído com sucesso' };  // envia resposta OK
+    } catch (err) {
+        console.error(err);
+        return { mensagem: 'Erro ao excluir equipamento' };
+    }
+}
+
+async function put(id, categoria, modelo, estado, quantidade, localizacao, marca) {
+    try {
+        let conn = await pool.getConnection();
+        const result = await conn.query('UPDATE equipamentos SET categoria = ?, modelo = ?, estado = ?, quantidade = ?, localizacao = ?, marca = ? WHERE id = ?', [categoria, modelo, estado, quantidade, localizacao, marca, id]);
+       
+        return { mensagem: 'Equipamento atualizado com sucesso.' };
+
+    } catch (err) {
+        console.error(err);
+        return { mensagem: 'Erro ao atualizar equipamento.' };
+    }
+
+}
 
 
-module.exports = { pool, read, create }
+module.exports = { pool, read, create, deletar, put }

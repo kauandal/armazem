@@ -141,7 +141,7 @@ app.put('/endereco/:id', async (req, res) => {
         return res.status(400).json({ erro: 'Nome inválido.' });
     }
 
-    enderecos.put(rua, numero, complemento, cep, id);
+    enderecos.put(id, rua, numero, complemento, cep);
     return res.status(200).json({ mensagem: 'Endereco atualizado com sucesso.' });
 });
 
@@ -263,6 +263,35 @@ app.post('/cadastrar-equipamento', async (req, res) => {
     }
 });
 
+app.get('/equipamentos', async (req, res) => {
+    const listEquipamentos = await equipamentos.read();
+    res.json(listEquipamentos);
+});
+
+app.delete('/equipamento/:id', async (req, res) => {
+    const id = req.params.id;
+    if (equipamentos.deletar(id) === 'Erro ao excluir equipamento') {
+        return res.status(400).json({ erro: 'Erro ao excluir equipamento' });
+    }
+    else {
+        return res.status(200).json({ mensagem: 'Equipamento deletado com sucesso.' })
+    }
+});
+
+app.put('/usuario/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { categoria, modelo, estado, quantidade, localizacao, marca } = req.body;
+
+    if (!categoria || categoria.trim() === "" || !modelo || modelo.trim() === "" || !estado || estado.trim() === "" || !quantidade || !localizacao || localizacao.trim() === "" || !marca || marca.trim() === "") {
+        return res.status(400).json({ erro: 'campo inválido.' });
+    }
+    usuarios.put(id, categoria, modelo, estado, quantidade, localizacao, marca);
+    return res.status(200).json({ mensagem: 'Equipamento atualizado com sucesso.' });
+});
+
+
+
+
 app.post('/cadastrar-computador', async (req, res) => {
     const { categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao } = req.body;
 
@@ -280,7 +309,3 @@ app.post('/cadastrar-computador', async (req, res) => {
     }
 });
 
-app.get('/equipamentos', async (req, res) => {
-    const listEquipamentos = await equipamentos.read();
-    res.json(listEquipamentos);
-});
