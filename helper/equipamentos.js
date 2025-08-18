@@ -53,8 +53,6 @@ async function put(id, categoria, modelo, estado, quantidade, localizacao, marca
         console.error(err);
         return { mensagem: 'Erro ao atualizar equipamento.' };
     }
-
 }
-
 
 module.exports = { pool, read, create, deletar, put }

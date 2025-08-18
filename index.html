@@ -6,32 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Armazém</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Boxicons CSS -->
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href='https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css' rel='stylesheet'>
 </head>
 
 <body>
 
     <div class="sidebar">
+        <div class="toggle-tab" onclick="toggleSidebar()">☰</div>
+
         <div class="logo-container">
             <h2>Armazém</h2>
-           <img class="logoIts" src="/imagens/logo_its.jpeg" loading="auto" width = "108" height="44">
+            <img class="logoIts" src="/imagens/logo_branco_its.jpeg" loading="auto">
         </div>
 
         <div class="menu" id="estoque">
-            <div class="menu-title" onclick="toggleSubmenu(this)">Estoque
-            </div>
+            <div class="menu-title" onclick="toggleSubmenu(this)"> <i class='bx  bx-box-alt'  ></i>  Estoque </div>
             <div class="submenu">
-                <a href="#" onclick="loadPage('/paginas/visualizacao/visualizacao.html')">Visualização Equipamentos</a>
+                <a href="#" onclick="loadPage('/paginas/visualizacao_equipamentos/visualizacao_equipamentos.html')">  Visualização Equipamentos</a>
                 <a href="#"
-                    onclick="loadPage('/paginas/visualizacaoComputadores/visualizacaoComputadores.html')">Visualização
+                    onclick="loadPage('/paginas/visualizacao_computadores/visualizacao_computadores.html')">  Visualização
                     Pcs</a>
                 <a href="#" id="cadastrar_equipamento"
-                    onclick="loadPage('/paginas/cadastro_equipamento/cadastro_equipamento.html')">Cadastro
+                    onclick="loadPage('/paginas/cadastro_equipamento/cadastro_equipamento.html')"> Cadastro
                     Equipamento</a>
             </div>
         </div>
 
         <div class="menu" id="empresa">
-            <div class="menu-title" onclick="toggleSubmenu(this)">Empresa</div>
+            <div class="menu-title" onclick="toggleSubmenu(this)"> <i class='bx  bx-building'  ></i>  Empresa</div>
             <div class="submenu">
                 <a href="#" onclick="loadPage('/paginas/cadastro_empresa/cadastro_empresa.html')">Empresa</a>
                 <a href="#" onclick="loadPage('/paginas/cadastro_cidade/cadastro_cidade.html')">Cidade</a>
@@ -41,7 +45,8 @@
         </div>
 
         <div class="menu" id="usuarios">
-            <div class="menu-title" onclick="toggleSubmenu(this)">Usuários</div>
+            <div class="menu-title" onclick="toggleSubmenu(this)">
+                <i class="bxr bx-user"></i> Usuários </div>
             <div class="submenu">
                 <a href="#" onclick="loadPage('/paginas/usuarios/usuarios.html')">Cadastrar</a>
                 <a href="#" onclick="loadPage('/paginas/permissoes/permissoes.html')">Permissões</a>
@@ -54,13 +59,13 @@
                 <span id="nomeUsuario" class="nome-usuario"></span>
             </div>
 
-            <button class="logout-btn" onclick="logout()">Sair</button>
+            <button class="logout-btn" onclick="logout()"> <i class='bxr  bx-arrow-out-up-square-half'  ></i> Sair</button>
         </div>
 
     </div>
 
     <div class="content">
-        <iframe id="mainFrame" src="/paginas/visualizacao/visualizacao.html"></iframe>
+        <iframe id="mainFrame" src="/paginas/visualizacao_equipamentos/visualizacao_equipamentos.html"></iframe>
 
     </div>
 

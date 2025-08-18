@@ -12,8 +12,8 @@ body {
 }
 
 .container {
-  max-width: 1600px;
-  margin: 0 auto;
+  max-width: 2000px;
+  margin: 10px auto;
   background-color: #ffffff;
   border-radius: 8px;
   padding: 30px;
@@ -25,6 +25,7 @@ body {
   margin-bottom: 20px;
   color: #2c3e50;
 }
+
 /* Botões superiores */
 .botoes-piso {
   display: flex;
@@ -44,7 +45,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.botao:hover{
+.botao:hover {
   background-color: #27ae60;
 }
 
@@ -68,7 +69,8 @@ thead {
   font-size: 14px;
 }
 
-th, td {
+th,
+td {
   padding: 12px 16px;
   border-bottom: 1px solid #e0e0e0;
   text-align: left;
@@ -87,16 +89,21 @@ tbody tr:last-child td {
 }
 
 /* COLUNAS ESPECÍFICAS */
-th:last-child, td:last-child {
+th:last-child,
+td:last-child {
   width: 100px;
   text-align: center;
 }
 
 .botoes-acao {
   display: flex;
-  gap: 8px;
+  flex-direction: row;
+  /* GARANTE linha */
+  gap: 6px;
   justify-content: center;
   align-items: center;
+  flex-wrap: nowrap;
+  /* Impede quebra de linha */
 }
 
 .btnUpdate,
@@ -104,11 +111,18 @@ th:last-child, td:last-child {
   padding: 6px 10px;
   border: none;
   border-radius: 5px;
+  font-size: 14px;
   color: white;
   cursor: pointer;
-  font-size: 14px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+th:last-child,
+td:last-child {
+  width: 160px;
+  /* ou mais */
+  text-align: center;
 }
 
 .btnUpdate {
@@ -130,73 +144,73 @@ th:last-child, td:last-child {
 }
 
 .modal {
-    display: none;
-    /* Oculto por padrão */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
+  display: none;
+  /* Oculto por padrão */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
 
 .modal-content {
-    background-color: #fff;
-    padding: 30px 25px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 400px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.3s ease-in-out;
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .modal-content h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #34495e;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #34495e;
 }
 
 .modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
 }
 
 
 .modal-buttons {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .modal-buttons button {
-    width: 48%;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #fff;
-    transition: background-color 0.3s ease;
+  width: 48%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  transition: background-color 0.3s ease;
 }
 
 .modal-buttons button:first-child {
-    background-color: #7f8c8d;
+  background-color: #7f8c8d;
 }
 
 .modal-buttons button:first-child:hover {
-    background-color: #636e72;
+  background-color: #636e72;
 }
 
 .modal-buttons button:last-child {
-    background-color: #27ae60;
+  background-color: #27ae60;
 }
 
 .modal-buttons button:last-child:hover {
-    background-color: #1e8449;
+  background-color: #1e8449;
 }

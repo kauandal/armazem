@@ -20,15 +20,18 @@ const listarEquipamentos = () => {
 
                 const acaoTd = document.createElement("td");
                 acaoTd.innerHTML = `
-  <div class="botoes-acao">
-    <button class="btnUpdate" onclick="abrirUpdate(${item.id}, '${item.categoria}', '${item.modelo}', '${item.estado}', '${item.quantidade}', '${item.localizacao}', '${item.marca}')">E</button>
-    <button class="btnDelete" onclick="deleteEquipamento(${item.id})">X</button>
+<div class="botoes-acao">
+    <button class="btnUpdate" onclick="abrirUpdate(${item.id}, '${item.categoria}', '${item.modelo}', '${item.estado}', ${item.quantidade}, '${item.localizacao}', '${item.marca}')">
+      <i class='bx bx-edit'></i>
+    </button>
+    <button class="btnDelete" onclick="deleteEquipamento(${item.id})">
+      <i class='bx bx-trash-x'></i>
+    </button>
   </div>
 `;
                 tr.appendChild(acaoTd);
 
             });
-
         })
 };
 
@@ -93,11 +96,11 @@ const salvaEquipamento = () => {
     const quantidadeAtt = document.getElementById('quantidadeEdicao').value;
     const localizacaoAtt = document.getElementById('localizacaoEdicao').value;
     const marcaAtt = document.getElementById('marcaEdicao').value;
-    updateEmpresa(idUpd, categoriaAtt, modeloAttt, estadoAtt, quantidadeAtt, localizacaoAtt, marcaAtt);
+    updateEquipamento(idUpd, categoriaAtt, modeloAttt, estadoAtt, quantidadeAtt, localizacaoAtt, marcaAtt);
     fecharEdicao();
 }
 
-const updateEmpresa = async (id, novaCategoria, novoModelo, novoEstado, novaQuantidade, novaLocalizacao, novaMarca) => {
+const updateEquipamento = async (id, novaCategoria, novoModelo, novoEstado, novaQuantidade, novaLocalizacao, novaMarca) => {
 
     if (!novaCategoria || novaCategoria.trim() === "") {
         alert("Por favor, informe a categoria do Equipamento.");
@@ -114,7 +117,7 @@ const updateEmpresa = async (id, novaCategoria, novoModelo, novoEstado, novaQuan
         return;
     }
 
-    fetch(`http://localhost:8080/empresa/${id}`, {
+    fetch(`http://localhost:8080/equipamento/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -160,3 +163,4 @@ const listarEmpresas = () => {
             console.error("Erro ao buscar empresas:", err);
         });
 }
+

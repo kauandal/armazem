@@ -57,3 +57,8 @@ const carregarUsuario = () => {
     if (name) userNameSpan.textContent = name;
     if (image) userPhotoImg.src = image;
 };
+
+const toggleSidebar = () => {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('collapsed');
+}

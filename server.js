@@ -278,19 +278,17 @@ app.delete('/equipamento/:id', async (req, res) => {
     }
 });
 
-app.put('/usuario/:id', async (req, res) => {
+app.put('/equipamento/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     const { categoria, modelo, estado, quantidade, localizacao, marca } = req.body;
 
     if (!categoria || categoria.trim() === "" || !modelo || modelo.trim() === "" || !estado || estado.trim() === "" || !quantidade || !localizacao || localizacao.trim() === "" || !marca || marca.trim() === "") {
         return res.status(400).json({ erro: 'campo inválido.' });
     }
-    usuarios.put(id, categoria, modelo, estado, quantidade, localizacao, marca);
+    
+    equipamentos.put(id, categoria, modelo, estado, quantidade, localizacao, marca);
     return res.status(200).json({ mensagem: 'Equipamento atualizado com sucesso.' });
 });
-
-
-
 
 app.post('/cadastrar-computador', async (req, res) => {
     const { categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao } = req.body;
@@ -309,3 +307,19 @@ app.post('/cadastrar-computador', async (req, res) => {
     }
 });
 
+app.get('/computadores', async (req, res) => {
+    const listarComputadores = await computadores.read();
+    res.json(listarComputadores);
+});
+
+app.put('/computador/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const { categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao } = req.body;
+
+    if (!categoria || categoria.trim() === "" || !especificacoes || especificacoes.trim() === "" || !memoria || memoria.trim() === "" || !quantidade || !localizacao || localizacao.trim() === "" || !processador || processador.trim() === "" || !armazenamento || armazenamento.trim() === "" || !fonte || fonte.trim() === ""  ) {
+        return res.status(400).json({ erro: 'campo inválido.' });
+    }
+    
+    computadores.put(id, categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao);
+    return res.status(200).json({ mensagem: 'Computador atualizado com sucesso.' });
+});
