@@ -84,6 +84,21 @@ tr:hover {
   transition: background-color 0.3s ease;
 }
 
+@media (min-width: 2000px) {
+
+  table,
+  th,
+  td {
+    font-size: 18px;
+  }
+}
+
+table,
+th,
+td {
+  transition: font-size 0.3s ease;
+}
+
 tbody tr:last-child td {
   border-bottom: none;
 }

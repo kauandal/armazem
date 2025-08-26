@@ -11,11 +11,11 @@
 
 <body>
     <div class="container">
-        <form>
-            <input type="text" id="empresaFiltro" list="listaEmpresas" placeholder="Filial" />
-            <datalist id="listaEmpresas"></datalist>
-            <input type="submit">
-        </form>
+        <input type="text" id="empresaFiltro" list="listaEmpresas" placeholder="Filial (vazio para mostrar tudo)" />
+        <datalist id="listaEmpresas"></datalist>
+        <input type="text" id="categoriaFiltro" list="listaCategorias" placeholder="Categoria (vazio para mostrar todas)" />
+        <datalist id="listaCategorias"></datalist>
+        <button type="button" id="btnFiltro" class="botao">Filtrar</button>
     </div>
 
     <div class="container">

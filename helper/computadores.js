@@ -44,4 +44,17 @@ async function put(id, categoria, especificacoes, quantidade, memoria, processad
     }
 }
 
-module.exports = { pool, read, create, put }
+async function deletar(id) {
+    try {
+        let conn = await pool.getConnection();
+        await conn.query('DELETE FROM computadores WHERE id = ?', [id]);
+        if (conn) conn.release();
+        return { mensagem: 'Computador excluído com sucesso' };  // envia resposta OK
+    } catch (err) {
+        console.error(err);
+        return { mensagem: 'Erro' };
+    }
+}
+
+
+module.exports = { pool, read, create, put, deletar }

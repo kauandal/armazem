@@ -3,7 +3,7 @@ const pool = require('../connection/connection').pool;
 async function read() {
     try {
         let conn = await pool.getConnection();
-        const equipamentos = await conn.query('SELECT id, categoria, modelo, estado, quantidade, localizacao, marca FROM equipamentos ORDER BY categoria ASC');
+        const equipamentos = await conn.query('SELECT id, categoria, modelo, estado, quantidade, localizacao, marca FROM equipamentos ORDER BY categoria ASC, localizacao ASC');
         if (conn) conn.release();
         return equipamentos;
 
@@ -46,7 +46,7 @@ async function put(id, categoria, modelo, estado, quantidade, localizacao, marca
     try {
         let conn = await pool.getConnection();
         const result = await conn.query('UPDATE equipamentos SET categoria = ?, modelo = ?, estado = ?, quantidade = ?, localizacao = ?, marca = ? WHERE id = ?', [categoria, modelo, estado, quantidade, localizacao, marca, id]);
-       
+
         return { mensagem: 'Equipamento atualizado com sucesso.' };
 
     } catch (err) {

@@ -48,6 +48,15 @@ body {
 .botao:hover {
   background-color: #27ae60;
 }
+.container input {
+  width: 30%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
 
 /* TABELA */
 table {
@@ -93,6 +102,18 @@ th:last-child,
 td:last-child {
   width: 100px;
   text-align: center;
+}
+
+@media (min-width: 2000px) {
+  table, th, td {
+    font-size: 18px;
+  }
+}
+
+table,
+th,
+td {
+  transition: font-size 0.3s ease;
 }
 
 .botoes-acao {

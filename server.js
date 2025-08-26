@@ -234,11 +234,11 @@ app.post('/login', async (req, res) => {
         return res.status(400).json({ error: 'Dados incompletos.' });
     }
 
-    const resultado = await usuarios.login(username, password); // <-- está chamando a função no usuarios.js
-    
+    const resultado = await usuarios.login(username, password);
+
 
     if (resultado.sucesso) {
-        return res.status(200).json({ success: true, permission: resultado.permission, name: resultado.name, image: resultado.image });
+        return res.status(200).json({ success: resultado.sucesso, permission: resultado.permission, name: resultado.name, image: resultado.image });
     } else {
         return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
     }
@@ -322,4 +322,14 @@ app.put('/computador/:id', async (req, res) => {
     
     computadores.put(id, categoria, especificacoes, quantidade, memoria, processador, armazenamento, fonte, localizacao);
     return res.status(200).json({ mensagem: 'Computador atualizado com sucesso.' });
+});
+
+app.delete('/computador/:id', async (req, res) => {
+    const id = req.params.id;
+    if (computadores.deletar(id) === 'Erro ao excluir computador') {
+        return res.status(400).json({ erro: 'Erro ao excluir computador' });
+    }
+    else {
+        return res.status(200).json({ mensagem: 'Computador deletado com sucesso.' })
+    }
 });

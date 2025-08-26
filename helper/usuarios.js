@@ -35,7 +35,7 @@ async function deletar(id) {
         let conn = await pool.getConnection();
         await conn.query('DELETE FROM users WHERE id = ?', [id]);
         if (conn) conn.release();
-        return { mensagem: 'Usuario excluída com sucesso' };  // envia resposta OK
+        return { mensagem: 'Usuario excluído com sucesso' };  // envia resposta OK
     } catch (err) {
         console.error(err);
         return { mensagem: 'Erro' };
