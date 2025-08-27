@@ -10,13 +10,22 @@
 </head>
 
 <body>
-    <div class="container">
-        <input type="text" id="empresaFiltro" list="listaEmpresas" placeholder="Filial (vazio para mostrar tudo)" />
+    <div class="filtro-container">
+        <input type="text" id="empresaFiltro" list="listaEmpresas" placeholder="Filtrar por Filial" />
         <datalist id="listaEmpresas"></datalist>
-        <input type="text" id="categoriaFiltro" list="listaCategorias" placeholder="Categoria (vazio para mostrar todas)" />
+
+        <input type="text" id="categoriaFiltro" list="listaCategorias" placeholder="Filtrar por Categoria" />
         <datalist id="listaCategorias"></datalist>
-        <button type="button" id="btnFiltro" class="botao">Filtrar</button>
+
+        <button type="button" id="btnFiltro" class="botao">
+            <i class='bx bx-filter'></i> Filtrar
+        </button>
+        <button type="button" class="botao" id="btnAtualizar">
+            <i class='bx bx-refresh-cw'></i> Atualizar Lista
+        </button>
+
     </div>
+
 
     <div class="container">
         <h3>Equipamentos cadastrados</h3>

@@ -1,5 +1,5 @@
 const cadastrarEquipamento = () => {
-    const categoria = document.getElementById("categoria").value;
+    const categoria = (document.getElementById("categoria").value).toLowerCase()  ;
     const modelo = document.getElementById("modelo").value;
     const estado = document.getElementById("estado").value;
     const quantidade = document.getElementById("qtd").value;
@@ -31,6 +31,7 @@ const cadastrarEquipamento = () => {
         alert("Por favor, informe a marca.");
         return;
     }
+    
 
     fetch('http://localhost:8080/cadastrar-equipamento', {
         method: 'POST',
