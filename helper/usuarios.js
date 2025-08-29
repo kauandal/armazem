@@ -3,7 +3,7 @@ const pool = require('../connection/connection').pool;
 async function read() {
     try {
         let conn = await pool.getConnection();
-        const usuarios = await conn.query('SELECT id, nome, email, imagem FROM users ORDER BY nome ASC');
+        const usuarios = await conn.query('SELECT id, nome, email, imagem, localizacao FROM users ORDER BY nome ASC');
         if (conn) conn.release();
         return usuarios;
 
@@ -13,12 +13,12 @@ async function read() {
     }
 }
 
-async function create(nome, hash, email, imagem, permissao) {
+async function create(nome, hash, email, imagem, permissao, localizacao) {
     try {
         let conn = await pool.getConnection();
         await conn.query(
-            'INSERT INTO users (nome, hash, email, imagem, permissao) VALUES (?, ?, ?, ?, ?)',
-            [nome, hash, email, imagem, permissao]
+            'INSERT INTO users (nome, hash, email, imagem, permissao, localizacao) VALUES (?, ?, ?, ?, ?, ?)',
+            [nome, hash, email, imagem, permissao, localizacao]
         );
 
         if (conn) conn.release();
@@ -42,10 +42,10 @@ async function deletar(id) {
     }
 }
 
-async function put(id, nome, hash, email) {
+async function put(id, nome, hash, email, localizacao) {
     try {
         let conn = await pool.getConnection();
-        const result = await conn.query('UPDATE users SET nome = ?, hash = ?, email = ? WHERE id = ?', [nome, hash, email, id]);
+        const result = await conn.query('UPDATE users SET nome = ?, hash = ?, email = ?, localizacao = ? WHERE id = ?', [nome, hash, email, localizacao, id]);
 
         if (result.affectedRows === 0) {
             return { erro: 'Usuario não encontrado.' };
@@ -69,12 +69,13 @@ async function login(username, password) {
         conn.release();
 
         const usuarioEncontrado = rows.length > 0;
-
+        
         return {
             sucesso: usuarioEncontrado,
             permission: usuarioEncontrado ? rows[0].permissao : null,
             name: usuarioEncontrado ? rows[0].nome : null,
-            image: usuarioEncontrado ? rows[0].imagem : null
+            image: usuarioEncontrado ? rows[0].imagem : null,
+            localizacao: usuarioEncontrado ? rows[0].localizacao : null
         };
 
     } catch (err) {

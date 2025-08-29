@@ -32,6 +32,7 @@ const listarUsuarios = () => {
 document.getElementById("btnAtualizar").addEventListener("click", listarUsuarios);
 
 document.addEventListener('DOMContentLoaded', () => {
+    listarEmpresas();
     listarUsuarios(); // carrega a primeira vez
 });
 
@@ -55,6 +56,7 @@ const fecharModal = () => {
     document.getElementById("nomeExibicao").value = "";
     document.getElementById("nomeUsuario").value = "";
     document.getElementById("senha").value = "";
+        document.getElementById("localizacao").value = "";
     document.getElementById("email").value = "";
 
 };
@@ -63,6 +65,7 @@ const confirmarCadastro = () => {
     const nome = document.getElementById("nomeExibicao").value;
     const login = document.getElementById("nomeUsuario").value;
     const senha = document.getElementById("senha").value;
+        const localizacao = document.getElementById("localizacao").value;
     const email = document.getElementById("email").value;
     const imagem = '/imagens/user_padrao.jpeg'
 
@@ -92,17 +95,17 @@ const confirmarCadastro = () => {
     const hash = login.trim() + ":" + senha.trim();
     const code_hash = btoa(hash);
 
-    enviarUsuario(nome.trim(), code_hash, email.trim(), imagem, permissao);
+    enviarUsuario(nome.trim(), code_hash, email.trim(), imagem, permissao, localizacao);
     fecharModal();
 };
 
-const enviarUsuario = (nome, hash, email, imagem, permissao) => {
+const enviarUsuario = (nome, hash, email, imagem, permissao, localizacao) => {
     fetch('http://localhost:8080/cadastrar-usuario', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ nome, hash, email, imagem, permissao })  // transforma { nome: "..." } em JSON
+        body: JSON.stringify({ nome, hash, email, imagem, permissao, localizacao })  // transforma { nome: "..." } em JSON
     })
         .then(res => res.json())
 
@@ -135,15 +138,17 @@ const deleteUsuario = (id) => {
     listarUsuarios();
 };
 
-const abrirUpdate = (id, nomeAtual, emailAtual, imagemAtual) => {
+const abrirUpdate = (id, nomeAtual, emailAtual, imagemAtual, localizacaoAtual) => {
     document.getElementById("modalEdicao").style.display = "flex";
 
     idUpd = id;
     const nomeModal = document.getElementById('nomeEdicao');
     const emailModal = document.getElementById('emailEdicao');
+    const localizacaoModal = document.getElementById('localizacaoEdicao');
 
     nomeModal.value = nomeAtual;
     emailModal.value = emailAtual;
+    localizacaoModal = localizacaoAtual;
 
 }
 
@@ -152,12 +157,13 @@ const salvarUsuario = () => {
     const loginAtt = document.getElementById('loginEdicao').value;
     const senhaAttt = document.getElementById('senhaEdicao').value;
     const emailAtt = document.getElementById('emailEdicao').value;
+    const localizacaoAtt = document.getElementById('localizacaoEdicao').value;
 
-    updateUsuario(idUpd, nomeAtt, loginAtt, senhaAttt, emailAtt);
+    updateUsuario(idUpd, nomeAtt, loginAtt, senhaAttt, emailAtt, localizacaoAtt);
     fecharEdicao();
 }
 
-const updateUsuario = (id, novoNome, novoLogin, novaSenha, novoEmail) => {
+const updateUsuario = (id, novoNome, novoLogin, novaSenha, novoEmail, novaLocalizacao) => {
     if (!novoNome || novoNome.trim() === "") {
         alert("Por favor, informe o nome do Usuário.");
         return;
@@ -184,7 +190,8 @@ const updateUsuario = (id, novoNome, novoLogin, novaSenha, novoEmail) => {
         body: JSON.stringify({
             nome: novoNome,
             hash: code_hash,
-            email: novoEmail
+            email: novoEmail,
+            localizacao: novaLocalizacao
         })
     })
         .then(res => {
@@ -203,5 +210,25 @@ const fecharEdicao = () => {
     document.getElementById("modalEdicao").style.display = "none";
     document.getElementById("nomeEdicao").value = "";
     document.getElementById("senhaEdicao").value = "";
+    document.getElementById("localizacaoEdicao").value = "";
     document.getElementById("emailEdicao").value = "";
+}
+
+const listarEmpresas = () => {
+    fetch('http://localhost:8080/nomesEmpresas')
+        .then(res => res.json())
+        .then(empresas => {
+            const datalist = document.getElementById('listaEmpresas');
+            datalist.innerHTML = '';
+            empresas.forEach(empresa => {
+                const option = document.createElement('option');
+                option.value = empresa.nome;
+                option.dataset.id = empresa.id;
+
+                datalist.appendChild(option)
+            });
+        })
+        .catch(err => {
+            console.error("Erro ao buscar empresas:", err);
+        });
 }

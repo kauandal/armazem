@@ -2,57 +2,84 @@ let idUpd = '';
 
 const listarEquipamentos = () => {
     const filtro = filtroEquipamentos();
+    const permissao = parseInt(sessionStorage.getItem("permission") || 0);
+
     fetch('http://localhost:8080/equipamentos')
         .then(res => res.json())
         .then(equipamentos => {
             const tbody = document.querySelector("#listaEquipamentos tbody");
-            tbody.innerHTML = ""; // Limpa o conteúdo anterior da tabela
+            tbody.innerHTML = ""; // Limpa a tabela
+
             const datalist = document.getElementById('listaCategorias');
             datalist.innerHTML = '';
-            equipamentos.forEach(item => {
 
+            // Esconde ou mostra a coluna do cabeçalho "AÇÕES"
+            const thAcoes = document.getElementById("colunaAcoes");
+            if (thAcoes) {
+                thAcoes.style.display = (permissao > 1) ? "none" : "";
+            }
+
+            // Preenche a lista de categorias (sem duplicar)
+            const categoriasSet = new Set();
+            equipamentos.forEach(item => categoriasSet.add(item.categoria));
+            categoriasSet.forEach(categoria => {
                 const option = document.createElement('option');
-                option.value = item.categoria;
+                option.value = categoria;
+                datalist.appendChild(option);
+            });
 
-                datalist.appendChild(option)
-
+            // Cria as linhas da tabela com base nos filtros
+            equipamentos.forEach(item => {
                 if (
                     (filtro.empresa === '' || item.localizacao === filtro.empresa) &&
                     (filtro.categoria === '' || item.categoria === filtro.categoria)
                 ) {
-
-
                     const tr = document.createElement("tr");
 
                     const categorias = ["categoria", "modelo", "estado", "quantidade", "localizacao", "marca"];
                     categorias.forEach(cat => {
                         const td = document.createElement("td");
-                        td.textContent = item[cat]; // acessa dinamicamente a categoria
+                        td.textContent = item[cat];
                         tr.appendChild(td);
                     });
+
+                    // Só adiciona a coluna de ações se a permissão for baixa
+                    if (permissao <= 1) {
+                        const acaoTd = document.createElement("td");
+                        acaoTd.classList.add("coluna-acoes");
+                        acaoTd.innerHTML = `
+                            <div class="botoes-acao">
+                                <button class="btnUpdate" onclick="abrirUpdate(${item.id}, '${item.categoria}', '${item.modelo}', '${item.estado}', ${item.quantidade}, '${item.localizacao}', '${item.marca}')">
+                                    <i class='bx bx-edit'></i>
+                                </button>
+                                <button class="btnDelete" onclick="deleteEquipamento(${item.id})">
+                                    <i class='bx bx-trash-x'></i>
+                                </button>
+                            </div>
+                        `;
+                        tr.appendChild(acaoTd);
+                    }
+
                     tbody.appendChild(tr);
-                    const acaoTd = document.createElement("td");
-                    acaoTd.innerHTML = `
-                        <div class="botoes-acao">
-                            <button class="btnUpdate" onclick="abrirUpdate(${item.id}, '${item.categoria}', '${item.modelo}', '${item.estado}', ${item.quantidade}, '${item.localizacao}', '${item.marca}')">
-                                <i class='bx bx-edit'></i>
-                            </button>
-                            <button class="btnDelete" onclick="deleteEquipamento(${item.id})">
-                                <i class='bx bx-trash-x'></i>
-                            </button>
-                        </div>
-                            `;
-                    tr.appendChild(acaoTd);
                 }
+                const thAcoes = document.getElementById("colunaAcoes");
+                if (permissao > 1 && thAcoes) {
+                    thAcoes.remove();
+                }
+
             });
         })
+        .catch(err => {
+            console.error("Erro ao listar equipamentos:", err);
+        });
 };
+
 
 const filtroEquipamentos = () => {
     const filtragemEmpresa = document.getElementById("empresaFiltro").value;
     const filtragemCategoria = document.getElementById("categoriaFiltro").value;
 
-    return({empresa:filtragemEmpresa, categoria:filtragemCategoria});
+    return ({ empresa: filtragemEmpresa, categoria: filtragemCategoria });
 }
 
 document.getElementById("btnAtualizar").addEventListener("click", listarEquipamentos);
@@ -60,18 +87,20 @@ document.getElementById("btnAtualizar").addEventListener("click", listarEquipame
 document.getElementById("btnFiltro").addEventListener("click", listarEquipamentos);
 
 document.addEventListener('DOMContentLoaded', () => {
-    listarEquipamentos();
-    listarEmpresas();
     permitirVisualizacao();
+    listarEmpresas();
+    listarEquipamentos();
+
 });
 
 const permitirVisualizacao = () => {
     const permissao = sessionStorage.getItem("permission");
+    const filial = sessionStorage.getItem("filial")
 
     if (parseInt(permissao) > 0) {
-        document.getElementById("empresaFiltro").style.display = "none";
-        // document.getElementById("empresaFiltro").value = filial;
-        //filtroEquipamentos();
+        const empresaFiltro = document.getElementById("empresaFiltro");
+        empresaFiltro.style.display = "none";
+        empresaFiltro.value = filial;
     }
 }
 

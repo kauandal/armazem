@@ -197,8 +197,8 @@ app.get('/usuarios', async (req, res) => {
 });
 
 app.post('/cadastrar-usuario', async (req, res) => {
-    const { nome, hash, email, imagem, permissao } = req.body;
-    if (usuarios.create(nome, hash, email, imagem, permissao) === "Erro ao cadastrar Usuario") {
+    const { nome, hash, email, imagem, permissao, localizacao } = req.body;
+    if (usuarios.create(nome, hash, email, imagem, permissao, localizacao) === "Erro ao cadastrar Usuario") {
         return res.status(400).json({ erro: 'Erro ao cadastrar usuario' });
     } else {
         return res.status(200).json({ mensagem: 'Usuario cadastrado com sucesso.' })
@@ -218,12 +218,12 @@ app.delete('/usuario/:id', async (req, res) => {
 
 app.put('/usuario/:id', async (req, res) => {
     const id = parseInt(req.params.id);
-    const { nome, hash, email } = req.body;
+    const { nome, hash, email, localizacao } = req.body;
 
-    if (!nome || nome.trim() === "" || !hash || hash.trim() === "" || !email || email.trim() === "") {
+    if (!nome || nome.trim() === "" || !hash || hash.trim() === "" || !email || email.trim() === "" || !localizacao || localizacao.trim() === "") {
         return res.status(400).json({ erro: 'campo inválido.' });
     }
-    usuarios.put(id, nome, hash, email);
+    usuarios.put(id, nome, hash, email, localizacao);
     return res.status(200).json({ mensagem: 'Usuario atualizado com sucesso.' });
 });
 
@@ -238,7 +238,7 @@ app.post('/login', async (req, res) => {
 
 
     if (resultado.sucesso) {
-        return res.status(200).json({ success: resultado.sucesso, permission: resultado.permission, name: resultado.name, image: resultado.image });
+        return res.status(200).json({ success: resultado.sucesso, permission: resultado.permission, name: resultado.name, image: resultado.image, localizacao: resultado.localizacao });
     } else {
         return res.status(401).json({ error: 'Usuário ou senha inválidos.' });
     }

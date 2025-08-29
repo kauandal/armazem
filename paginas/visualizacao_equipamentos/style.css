@@ -130,10 +130,9 @@ tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* COLUNAS ESPECÍFICAS */
-th:last-child,
-td:last-child {
-  width: 100px;
+th.coluna-acoes,
+td.coluna-acoes {
+  width: 160px;
   text-align: center;
 }
 
