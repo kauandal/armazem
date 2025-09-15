@@ -76,9 +76,9 @@ const listarEquipamentos = () => {
 
 
 const filtroEquipamentos = () => {
-    const filtragemEmpresa = document.getElementById("empresaFiltro").value;
-    const filtragemCategoria = document.getElementById("categoriaFiltro").value;
-
+    const filtragemEmpresa = (document.getElementById("empresaFiltro").value).trim();
+    const filtragemCategoria = (document.getElementById("categoriaFiltro").value).trim();
+    
     return ({ empresa: filtragemEmpresa, categoria: filtragemCategoria });
 }
 
@@ -152,7 +152,7 @@ const fecharEdicao = () => {
 }
 
 const salvaEquipamento = () => {
-    const categoriaAtt = document.getElementById('categoriaEdicao').value;
+    const categoriaAtt = (document.getElementById('categoriaEdicao').value).toLowerCase();
     const modeloAttt = document.getElementById('modeloEdicao').value;
     const estadoAtt = document.getElementById('estadoEdicao').value;
     const quantidadeAtt = document.getElementById('quantidadeEdicao').value;

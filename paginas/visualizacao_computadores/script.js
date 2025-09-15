@@ -1,26 +1,55 @@
 let idUpd = '';
 
 const listarComputadores = () => {
+    const filtro = filtroComputadores();
+    const permissao = parseInt(sessionStorage.getItem('permission') || 0);
+
     fetch('http://localhost:8080/computadores')
         .then(res => res.json())
         .then(computadores => {
             const tbody = document.querySelector("#listaComputadores tbody");
             tbody.innerHTML = ""; // Limpa o conteúdo anterior da tabela
 
+            const datalist = document.getElementById('listaCategorias');
+            datalist.innerHTML = '';
+
+            // Esconde ou mostra a coluna do cabeçalho "AÇÕES"
+            const thAcoes = document.getElementById("colunaAcoes");
+            if (thAcoes) {
+                thAcoes.style.display = (permissao > 1) ? "none" : "";
+            }
+
+            // Preenche a lista de categorias (sem duplicar)
+            const categoriasSet = new Set();
+            computadores.forEach(item => categoriasSet.add(item.categoria));
+            categoriasSet.forEach(categoria => {
+                const option = document.createElement('option');
+                option.value = categoria;
+                datalist.appendChild(option);
+            });
+
+
             computadores.forEach(item => {
-                const tr = document.createElement("tr");
+                if (
+                    (filtro.empresa === '' || item.localizacao === filtro.empresa) &&
+                    (filtro.categoria === '' || filtro.categoria === item.categoria)
+                ) {
 
-                const categorias = ["categoria", "especificacoes", "quantidade", "memoria", "processador", "armazenamento", "fonte", "localizacao"];
-                categorias.forEach(cat => {
-                    const td = document.createElement("td");
-                    td.textContent = item[cat]; // acessa dinamicamente a categoria
-                    tr.appendChild(td);
-                });
-                tbody.appendChild(tr);
+                    const tr = document.createElement("tr");
 
-                const acaoTd = document.createElement("td");
-                acaoTd.innerHTML = `
-<div class="botoes-acao">
+                    const categorias = ["categoria", "especificacoes", "quantidade", "memoria", "processador", "armazenamento", "fonte", "localizacao"];
+                    categorias.forEach(cat => {
+                        const td = document.createElement("td");
+                        td.textContent = item[cat]; // acessa dinamicamente a categoria
+                        tr.appendChild(td);
+                    });
+
+                    // Só adiciona a coluna de ações se a permissão for baixa
+                    if (permissao <= 1) {
+                        const acaoTd = document.createElement("td");
+                        acaoTd.classList.add("coluna-acoes");
+                        acaoTd.innerHTML = `
+                        <div class="botoes-acao">
     <button class="btnUpdate" onclick="abrirUpdate(${item.id}, '${item.categoria}', '${item.especificacoes}', '${item.quantidade}', '${item.memoria}', '${item.processador}', '${item.armazenamento}', '${item.fonte}', '${item.localizacao}')">
       <i class='bx bx-edit'></i>
     </button>
@@ -29,18 +58,51 @@ const listarComputadores = () => {
     </button>
   </div>
 `;
-                tr.appendChild(acaoTd);
+                        tr.appendChild(acaoTd);
+                    }
 
+
+
+                    tbody.appendChild(tr);
+
+                
+                }
+                const thAcoes = document.getElementById("colunaAcoes");
+                if(permissao > 1 && thAcoes){
+                    thAcoes.remove();
+                }
             });
         })
 };
 
+const filtroComputadores = () => {
+    const filtroEmpresa = document.getElementById("filtroEmpresa").value;
+    const filtrocategoria = document.getElementById("filtroCategoria").value;
+
+    return { empresa: filtroEmpresa, categoria: filtrocategoria }
+}
+
 document.getElementById("btnAtualizar").addEventListener("click", listarComputadores);
 
+document.getElementById("btnFiltro").addEventListener("click", listarComputadores);
+
 document.addEventListener('DOMContentLoaded', () => {
-    listarComputadores();
+    permitirVisualizacao();
     listarEmpresas();
+    listarComputadores();
+
 });
+
+const permitirVisualizacao = () => {
+    const permissao = sessionStorage.getItem("permission");
+    const filial = sessionStorage.getItem("filial")
+
+    if (parseInt(permissao) > 0) {
+        const empresaFiltro = document.getElementById("filtroEmpresa");
+        empresaFiltro.style.display = "none";
+        empresaFiltro.value = filial;
+    }
+}
 
 const deleteComputador = (id) => {
     if (!confirm("Deseja realmente excluir?")) return;
@@ -105,7 +167,7 @@ const salvaComputador = () => {
     const armazenamentoAtt = document.getElementById('armazenamentoEdicao').value;
     const fonteAtt = document.getElementById('fonteEdicao').value;
     const localizacaoAtt = document.getElementById('localizacaoEdicao').value;
-    updateComputador(idUpd, categoriaAtt, especAttt, quantidadeAtt, memoriaAtt , processadorAtt, armazenamentoAtt, fonteAtt, localizacaoAtt);
+    updateComputador(idUpd, categoriaAtt, especAttt, quantidadeAtt, memoriaAtt, processadorAtt, armazenamentoAtt, fonteAtt, localizacaoAtt);
     fecharEdicao();
 }
 
@@ -126,22 +188,22 @@ const updateComputador = async (id, novaCategoria, novaEspec, novaQuantidade, no
         return;
     }
 
-     if (!novaMemoria || novaMemoria.trim() === "") {
+    if (!novaMemoria || novaMemoria.trim() === "") {
         alert("Por favor, informe a memoria do computador.");
         return;
     }
 
-     if (!novoProcessador || novoProcessador.trim() === "") {
+    if (!novoProcessador || novoProcessador.trim() === "") {
         alert("Por favor, informe o processador do computador.");
         return;
     }
 
-     if (!novoArmazenamento || novoArmazenamento.trim() === "") {
+    if (!novoArmazenamento || novoArmazenamento.trim() === "") {
         alert("Por favor, informe o armazenamento do computador.");
         return;
     }
 
-     if (!novaFonte || novaFonte.trim() === "") {
+    if (!novaFonte || novaFonte.trim() === "") {
         alert("Por favor, informe a fonte do computador.");
         return;
     }
@@ -160,7 +222,7 @@ const updateComputador = async (id, novaCategoria, novaEspec, novaQuantidade, no
             armazenamento: novoArmazenamento,
             fonte: novaFonte,
             localizacao: novaLocalizacao
-            
+
         })
     })
         .then(res => {

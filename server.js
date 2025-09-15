@@ -227,6 +227,17 @@ app.put('/usuario/:id', async (req, res) => {
     return res.status(200).json({ mensagem: 'Usuario atualizado com sucesso.' });
 });
 
+app.read('/usuario/permissoes:id', async(req,res) => {
+    const id = parseInt(req.params.id);
+    
+    if(!id){
+        return res.status(400).json({ mensagem: 'id inválido'})
+    }
+    
+    const listPermissoes = await usuarios.permissoes(id);
+    res.json(listPermissoes);
+})
+
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 

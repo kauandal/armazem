@@ -10,12 +10,22 @@
 </head>
 
 <body>
-    <div class="container">
-        <form>
-            <input type="text" id="empresaFiltro" list="listaEmpresas" placeholder="Filial" />
-            <datalist id="listaEmpresas"></datalist>
-            <input type="submit">
-        </form>
+  
+  <body>
+    <div class="filtro-container">
+        <input type="text" id="filtroEmpresa" list="listaEmpresas" placeholder="Filtrar por Filial" />
+        <datalist id="listaEmpresas"></datalist>
+
+        <input type="text" id="filtroCategoria" list="listaCategorias" placeholder="Filtrar por Categoria" />
+        <datalist id="listaCategorias"></datalist>
+
+        <button type="button" id="btnFiltro" class="botao">
+            <i class='bx bx-filter'></i> Filtrar
+        </button>
+        <button type="button" class="botao" id="btnAtualizar">
+            <i class='bx bx-refresh-cw'></i> Atualizar Lista
+        </button>
+
     </div>
 
     <div class="container">
@@ -31,7 +41,7 @@
                     <th>Armazenamento</th>
                     <th>Fonte</th>
                     <th>Localização</th>
-                    <th>Ações</th>
+                    <th id ="colunaAcoes">Ações</th>
                 </tr>
             </thead>
             <tbody>

@@ -73,6 +73,7 @@
     width: 45px;
     /* aumenta um pouco */
     background-color: #16a085;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
 }
 
 .sidebar.collapsed {
@@ -136,6 +137,7 @@ body {
 
 .menu-title:hover {
     background-color: #1abc9c;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
 
@@ -152,6 +154,7 @@ body {
 
 .menu-title.open {
     background-color: #16a085;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
     color: white;
 }
 
@@ -165,6 +168,7 @@ body {
     margin-left: 10px;
     padding-left: 10px;
     border-left: 2px solid #1abc9c;
+    /* border-left: 2px solid #F15A29;  para a cor laranja da empresa*/
 }
 
 .submenu.active {
@@ -184,6 +188,7 @@ body {
 
 .submenu a:hover {
     background-color: #1abc9c;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
     transform: translateX(5px);
 }
 

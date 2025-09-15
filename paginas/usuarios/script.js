@@ -13,8 +13,8 @@ const listarUsuarios = () => {
         <img src="${usuario.imagem}" alt="${usuario.nome}" class="avatar">
         <span class="nome-usuario">${usuario.nome}</span>
         <div class="botoes-acao">
-            <button class="btnView" onclick="verUsuario('${usuario.nome}', '${usuario.email}')">ver</button>
-            <button class="btnUpdate" onclick="abrirUpdate(${usuario.id}, '${usuario.nome}', '${usuario.email}', '${usuario.imagem}')">E</button>
+            <button class="btnView" onclick="verUsuario('${usuario.nome}', '${usuario.email}', '${usuario.localizacao}')">ver</button>
+            <button class="btnUpdate" onclick="abrirUpdate(${usuario.id}, '${usuario.nome}', '${usuario.email}', '${usuario.imagem}', '${usuario.localizacao}')">E</button>
             <button class="btnDelete" onclick="deleteUsuario(${usuario.id})">X</button>
         </div>
     </div>
@@ -36,9 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     listarUsuarios(); // carrega a primeira vez
 });
 
-const verUsuario = (nome, email) => {
+const verUsuario = (nome, email, localizacao) => {
     document.getElementById("viewNomeUsuario").textContent = nome;
     document.getElementById("viewEmail").textContent = email;
+    document.getElementById("viewLocalizacao").textContent = localizacao;
     document.getElementById("modalView").style.display = "flex";
 }
 
@@ -56,7 +57,7 @@ const fecharModal = () => {
     document.getElementById("nomeExibicao").value = "";
     document.getElementById("nomeUsuario").value = "";
     document.getElementById("senha").value = "";
-        document.getElementById("localizacao").value = "";
+    document.getElementById("localizacao").value = "";
     document.getElementById("email").value = "";
 
 };
@@ -65,7 +66,7 @@ const confirmarCadastro = () => {
     const nome = document.getElementById("nomeExibicao").value;
     const login = document.getElementById("nomeUsuario").value;
     const senha = document.getElementById("senha").value;
-        const localizacao = document.getElementById("localizacao").value;
+    const localizacao = document.getElementById("localizacao").value;
     const email = document.getElementById("email").value;
     const imagem = '/imagens/user_padrao.jpeg'
 
@@ -81,6 +82,11 @@ const confirmarCadastro = () => {
 
     if (!email || email.trim() === "") {
         alert("Por favor, informe o email.");
+        return;
+    }
+
+    if (!email || email.trim() === "") {
+        alert("Por favor, informe a Filial.");
         return;
     }
 
@@ -148,7 +154,7 @@ const abrirUpdate = (id, nomeAtual, emailAtual, imagemAtual, localizacaoAtual) =
 
     nomeModal.value = nomeAtual;
     emailModal.value = emailAtual;
-    localizacaoModal = localizacaoAtual;
+    localizacaoModal.value = localizacaoAtual;
 
 }
 
@@ -176,6 +182,12 @@ const updateUsuario = (id, novoNome, novoLogin, novaSenha, novoEmail, novaLocali
 
     if (!novoEmail || novoEmail.trim() === "") {
         alert("Por favor, informe o email.");
+        return;
+    }
+
+
+    if (!novaLocalizacao || novaLocalizacao.trim() === "") {
+        alert("Por favor, informe a Filial.");
         return;
     }
 
@@ -210,8 +222,8 @@ const fecharEdicao = () => {
     document.getElementById("modalEdicao").style.display = "none";
     document.getElementById("nomeEdicao").value = "";
     document.getElementById("senhaEdicao").value = "";
-    document.getElementById("localizacaoEdicao").value = "";
     document.getElementById("emailEdicao").value = "";
+    document.getElementById("localizacaoEdicao").value = "";
 }
 
 const listarEmpresas = () => {

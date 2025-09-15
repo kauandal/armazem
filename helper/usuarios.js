@@ -16,10 +16,29 @@ async function read() {
 async function create(nome, hash, email, imagem, permissao, localizacao) {
     try {
         let conn = await pool.getConnection();
-        await conn.query(
+        result = await conn.query(
             'INSERT INTO users (nome, hash, email, imagem, permissao, localizacao) VALUES (?, ?, ?, ?, ?, ?)',
             [nome, hash, email, imagem, permissao, localizacao]
         );
+
+        if(permissao == 0){
+            await conn.query(
+            'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [result.insertId, 0, 1, 1, 1, 1, 1]
+            );
+        }
+        else if(permissao == 1){
+            await conn.query(
+            'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [result.insertId, 1, 1, 1, 1, 1, 0]
+            );
+        }
+        else{
+            await conn.query(
+            'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [result.insertId, 2, 1, 1, 0, 0, 0]
+            );
+        }
 
         if (conn) conn.release();
         return { mensagem: `Usuario cadastrado com sucesso!` };
@@ -87,6 +106,21 @@ async function login(username, password) {
     }
 }
 
+async function permissoes(id) {
+
+    try {
+        let conn = await pool.getConnection();
+        const permissoes = await conn.query('SELECT permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios FROM permissoes WHERE id = ?', [id]);
+        if (conn) conn.release();
+        return permissoes;
+
+    } catch (err) {
+        console.error(err);
+        return { mensagem: 'Erro ao encontrar usuário' };
+    }
+}
 
 
-module.exports = { pool, put, read, create, deletar, login }
+
+
+module.exports = { pool, put, read, create, deletar, login, permissoes }
