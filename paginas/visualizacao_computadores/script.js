@@ -2,7 +2,10 @@ let idUpd = '';
 
 const listarComputadores = () => {
     const filtro = filtroComputadores();
-    const permissao = parseInt(sessionStorage.getItem('permission') || 0);
+     const permissaoString = sessionStorage.getItem("permission");
+    if (!permissaoString) return; // se não tiver permissão, sai
+
+    const permissao = JSON.parse(permissaoString);
 
     fetch('http://localhost:8080/computadores')
         .then(res => res.json())
@@ -16,7 +19,7 @@ const listarComputadores = () => {
             // Esconde ou mostra a coluna do cabeçalho "AÇÕES"
             const thAcoes = document.getElementById("colunaAcoes");
             if (thAcoes) {
-                thAcoes.style.display = (permissao > 1) ? "none" : "";
+                thAcoes.style.display = (permissao.editar_equipamentos != 1) ? "none" : "";
             }
 
             // Preenche a lista de categorias (sem duplicar)
@@ -45,7 +48,7 @@ const listarComputadores = () => {
                     });
 
                     // Só adiciona a coluna de ações se a permissão for baixa
-                    if (permissao <= 1) {
+                    if (permissao.editar_equipamentos === 1) {
                         const acaoTd = document.createElement("td");
                         acaoTd.classList.add("coluna-acoes");
                         acaoTd.innerHTML = `
@@ -68,7 +71,7 @@ const listarComputadores = () => {
                 
                 }
                 const thAcoes = document.getElementById("colunaAcoes");
-                if(permissao > 1 && thAcoes){
+                if(permissao.editar_equipamentos != 1 && thAcoes){
                     thAcoes.remove();
                 }
             });

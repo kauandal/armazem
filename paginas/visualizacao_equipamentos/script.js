@@ -2,7 +2,11 @@ let idUpd = '';
 
 const listarEquipamentos = () => {
     const filtro = filtroEquipamentos();
-    const permissao = parseInt(sessionStorage.getItem("permission") || 0);
+    const permissaoString = sessionStorage.getItem("permission");
+    if (!permissaoString) return; // se não tiver permissão, sai
+
+    const permissao = JSON.parse(permissaoString);
+
 
     fetch('http://localhost:8080/equipamentos')
         .then(res => res.json())
@@ -16,7 +20,7 @@ const listarEquipamentos = () => {
             // Esconde ou mostra a coluna do cabeçalho "AÇÕES"
             const thAcoes = document.getElementById("colunaAcoes");
             if (thAcoes) {
-                thAcoes.style.display = (permissao > 1) ? "none" : "";
+                thAcoes.style.display = (permissao.editar_equipamentos != 1) ? "none" : "";
             }
 
             // Preenche a lista de categorias (sem duplicar)
@@ -44,7 +48,7 @@ const listarEquipamentos = () => {
                     });
 
                     // Só adiciona a coluna de ações se a permissão for baixa
-                    if (permissao <= 1) {
+                    if (permissao.editar_equipamentos == 1) {
                         const acaoTd = document.createElement("td");
                         acaoTd.classList.add("coluna-acoes");
                         acaoTd.innerHTML = `
@@ -63,7 +67,7 @@ const listarEquipamentos = () => {
                     tbody.appendChild(tr);
                 }
                 const thAcoes = document.getElementById("colunaAcoes");
-                if (permissao > 1 && thAcoes) {
+                if (permissao.editar_equipamentos != 1 && thAcoes) {
                     thAcoes.remove();
                 }
 
@@ -94,15 +98,20 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const permitirVisualizacao = () => {
-    const permissao = sessionStorage.getItem("permission");
-    const filial = sessionStorage.getItem("filial")
+    const permissaoString = sessionStorage.getItem("permission");
+    const filial = sessionStorage.getItem("filial");
 
-    if (parseInt(permissao) > 0) {
+    if (!permissaoString) return; // se não tiver permissão, sai
+
+    const permissao = JSON.parse(permissaoString);
+
+    if (parseInt(permissao.multi_filial) != 1) {
         const empresaFiltro = document.getElementById("empresaFiltro");
         empresaFiltro.style.display = "none";
         empresaFiltro.value = filial;
     }
 }
+
 
 const deleteEquipamento = (id) => {
     if (!confirm("Deseja realmente excluir?")) return;

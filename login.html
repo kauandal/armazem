@@ -38,7 +38,7 @@
                     }
                 })
                 .then(data => {
-                    sessionStorage.setItem("permission", data.permission);
+                    sessionStorage.setItem("permission", JSON.stringify(data.permission));
                     sessionStorage.setItem("name", data.name);
                     sessionStorage.setItem("image", data.image);
                     sessionStorage.setItem("filial", data.localizacao);

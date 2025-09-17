@@ -34,83 +34,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 const abrirUpdate = (id, nomeAtual, emailAtual, imagemAtual, localizacaoAtual) => {
+    idUpd = id;
+
     document.getElementById("modalEdicao").style.display = "flex";
 
-    idUpd = id;
-    const nomeModal = document.getElementById('nomeEdicao');
-    const emailModal = document.getElementById('emailEdicao');
-    const localizacaoModal = document.getElementById('localizacaoEdicao');
+   fetch(`http://localhost:8080/usuario/permissoes/${id}`)
+    .then(res => res.json())
+    .then(data => {
+      const p = data[0]; // Assume que o resultado é um array com um único objeto
 
-    nomeModal.value = nomeAtual;
-    emailModal.value = emailAtual;
-    localizacaoModal.value = localizacaoAtual;
-
-}
-
-const salvarUsuario = () => {
-    const nomeAtt = document.getElementById('nomeEdicao').value;
-    const loginAtt = document.getElementById('loginEdicao').value;
-    const senhaAttt = document.getElementById('senhaEdicao').value;
-    const emailAtt = document.getElementById('emailEdicao').value;
-    const localizacaoAtt = document.getElementById('localizacaoEdicao').value;
-
-    updateUsuario(idUpd, nomeAtt, loginAtt, senhaAttt, emailAtt, localizacaoAtt);
-    fecharEdicao();
-}
-
-const updateUsuario = (id, novoNome, novoLogin, novaSenha, novoEmail, novaLocalizacao) => {
-    if (!novoNome || novoNome.trim() === "") {
-        alert("Por favor, informe o nome do Usuário.");
-        return;
-    }
-
-    if (!novaSenha || !novoLogin || novoLogin.trim() === "" || novaSenha.trim() === "") {
-        alert("Por favor, informe o novo login e Senha");
-        return;
-    }
-
-    if (!novoEmail || novoEmail.trim() === "") {
-        alert("Por favor, informe o email.");
-        return;
-    }
-
-
-    if (!novaLocalizacao || novaLocalizacao.trim() === "") {
-        alert("Por favor, informe a Filial.");
-        return;
-    }
-
-    const hash = novoLogin.trim() + ":" + novaSenha.trim();
-    const code_hash = btoa(hash);
-
-    fetch(`http://localhost:8080/usuario/${id}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            nome: novoNome,
-            hash: code_hash,
-            email: novoEmail,
-            localizacao: novaLocalizacao
-        })
+      document.getElementById('visualizacaoEquipamentos').checked = p.visualizacao_equipamentos === 1;
+      document.getElementById('visualizacaoComputadores').checked = p.visualizacao_computadores === 1;
+      document.getElementById('editarEquipamentos').checked = p.editar_equipamentos === 1;
+      document.getElementById('cadastroEquipamentos').checked = p.cadastro_equipamentos === 1;
+      document.getElementById('empresas').checked = p.empresas === 1;
+      document.getElementById('usuarios').checked = p.usuarios === 1;
+      document.getElementById('multi_filial').checked = p.multi_filial === 1;
     })
-        .then(res => {
-            if (res.ok) {
-                listarUsuarios();
-            } else {
-                console.error("Erro ao atualizar usuarios");
-            }
-        })
-        .catch(err => {
-            console.error("Erro na atualização", err);
-        });
+    .catch(err => {
+      console.error('Erro ao carregar permissões:', err);
+    });
 };
 
+
+
+const salvarPermissoes = () => {
+  const permissoes = {
+    visualizacao_equipamentos: document.getElementById('visualizacaoEquipamentos').checked ? 1 : 0,
+    visualizacao_computadores: document.getElementById('visualizacaoComputadores').checked ? 1 : 0,
+    editar_equipamentos: document.getElementById('editarEquipamentos').checked ? 1 : 0,
+    cadastro_equipamentos: document.getElementById('cadastroEquipamentos').checked ? 1 : 0,
+    empresas: document.getElementById('empresas').checked ? 1 : 0,
+    usuarios: document.getElementById('usuarios').checked ? 1 : 0,
+    multi_filial: document.getElementById('multi_filial').checked ? 1 : 0
+  };
+
+  fetch(`http://localhost:8080/permissoes/${idUpd}`, {
+    method: 'PUT', // ou POST, dependendo da sua API
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(permissoes)
+  })
+    .then(res => {
+      if (res.ok) {
+        alert('Permissões atualizadas com sucesso!');
+        fecharEdicao();
+      } else {
+        alert('Erro ao atualizar permissões');
+        console.error(res.statusText);
+      }
+    })
+    .catch(err => {
+      console.error('Erro ao salvar permissões:', err);
+    });
+};
+
+
 const fecharEdicao = () => {
-    document.getElementById("modalEdicao").style.display = "none";
-    document.getElementById("nomeEdicao").value = "";
-    document.getElementById("senhaEdicao").value = "";
-    document.getElementById("emailEdicao").value = "";
-    document.getElementById("localizacaoEdicao").value = "";
+  document.getElementById("modalEdicao").style.display = "none";
 }

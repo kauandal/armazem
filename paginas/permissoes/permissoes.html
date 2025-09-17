@@ -16,31 +16,39 @@
 
         <div class="modal" id="modalEdicao">
             <div class="modal-content">
-                <h2>Editar Usuário</h2>
-                <label for="visualizacaoEquipamentos">
+                <h2>Editar Permissões</h2>
+                <label>
                     Visualização Equipamentos
                     <input type="checkbox" id="visualizacaoEquipamentos" />
                 </label>
-                <label for="visualizacaoComputadores">
+                <label>
                     Visualização Computadores
                     <input type="checkbox" id="visualizacaoComputadores" />
                 </label>
-                <label for="cadastroEquipamentos">
+                <label>
+                    Edição de Equipamentos
+                    <input type="checkbox" id="editarEquipamentos" />
+                </label>
+                <label>
                     Cadastro de Equipamentos
                     <input type="checkbox" id="cadastroEquipamentos" />
                 </label>
-                <label for="empresas">
+                <label>
                     Empresas
                     <input type="checkbox" id="empresas" />
                 </label>
-                <label for="usuarios">
+                <label>
                     Usuários
                     <input type="checkbox" id="usuarios" />
+                </label>
+                <label>
+                    Usuário é multi filial?
+                    <input type="checkbox" id="multi_filial" />
                 </label>
 
                 <div class="modal-buttons">
                     <button onclick="fecharEdicao()">Cancelar</button>
-                    <button onclick="salvarUsuario()">Salvar</button>
+                    <button onclick="salvarPermissoes()">Salvar</button>
                 </div>
             </div>
         </div>

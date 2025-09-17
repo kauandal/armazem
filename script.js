@@ -37,15 +37,36 @@ const logout = () => {
 }
 
 const vePermissao = () => {
-    const permissao = sessionStorage.getItem('permission');
-    if (parseInt(permissao) > 0) {
+    const permissaoString = sessionStorage.getItem('permission');
+    if (!permissaoString) return; // sem permissão, sai da função
+
+    const permissao = JSON.parse(permissaoString);
+
+    if (parseInt(permissao.visualizacao_equipamentos) !== 1) {
+        document.getElementById("visualizacao_equipamentos").style.display = "none";
+    }
+
+    if (parseInt(permissao.visualizacao_computadores) !== 1) {
+        document.getElementById("visualizacao_computadores").style.display = "none";
+    }
+
+    if (parseInt(permissao.cadastro_equipamentos) !== 1) {
+        document.getElementById("cadastro_equipamento").style.display = "none";
+    }
+
+    if (parseInt(permissao.empresas) !== 1) {
         document.getElementById("empresa").style.display = "none";
+    }
+
+    if (parseInt(permissao.usuarios) !== 1) {
         document.getElementById("usuarios").style.display = "none";
     }
-    if (parseInt(permissao) > 1) {
-        document.getElementById("cadastrar_equipamento").style.display = "none";
+
+    if (parseInt(permissao.multi_filial) !== 1) {
+        //some o filtro de empresas dos equipamentos e computadores
     }
 }
+
 
 const carregarUsuario = () => {
     const name = sessionStorage.getItem("name");

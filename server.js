@@ -198,38 +198,69 @@ app.get('/usuarios', async (req, res) => {
 
 app.post('/cadastrar-usuario', async (req, res) => {
     const { nome, hash, email, imagem, permissao, localizacao } = req.body;
-    if (usuarios.create(nome, hash, email, imagem, permissao, localizacao) === "Erro ao cadastrar Usuario") {
-        return res.status(400).json({ erro: 'Erro ao cadastrar usuario' });
+
+    const resultado = await usuarios.create(nome, hash, email, imagem, permissao, localizacao);
+
+    if (resultado.mensagem === "Erro ao cadastrar Usuario") {
+        return res.status(400).json({ erro: 'Erro ao cadastrar usuário' });
     } else {
-        return res.status(200).json({ mensagem: 'Usuario cadastrado com sucesso.' })
-    }
-
-})
-
-app.delete('/usuario/:id', async (req, res) => {
-    const id = req.params.id;
-    if (usuarios.deletar(id) === 'Erro') {
-        return res.status(400).json({ erro: 'Erro' });
-    }
-    else {
-        return res.status(200).json({ mensagem: 'Usuario deletado com sucesso.' })
+        return res.status(200).json({ mensagem: resultado.mensagem });
     }
 });
+
+
+app.delete('/usuario/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    const resultado = await usuarios.deletar(id);
+
+    if (resultado.mensagem === 'Erro') {
+        return res.status(400).json({ erro: 'Erro ao deletar usuário' });
+    } else {
+        return res.status(200).json({ mensagem: resultado.mensagem });
+    }
+});
+
 
 app.put('/usuario/:id', async (req, res) => {
     const id = parseInt(req.params.id);
     const { nome, hash, email, localizacao } = req.body;
 
-    if (!nome || nome.trim() === "" || !hash || hash.trim() === "" || !email || email.trim() === "" || !localizacao || localizacao.trim() === "") {
-        return res.status(400).json({ erro: 'campo inválido.' });
+    if (!nome || !hash || !email || !localizacao) {
+        return res.status(400).json({ erro: 'Campos inválidos.' });
     }
-    usuarios.put(id, nome, hash, email, localizacao);
-    return res.status(200).json({ mensagem: 'Usuario atualizado com sucesso.' });
+
+    const resultado = await usuarios.put(id, nome, hash, email, localizacao);
+
+    if (resultado.erro) {
+        return res.status(404).json({ erro: resultado.erro });
+    }
+
+    return res.status(200).json({ mensagem: resultado.mensagem });
 });
 
-app.read('/usuario/permissoes:id', async(req,res) => {
+app.put('/permissoes/:id', async (req, res) => {
     const id = parseInt(req.params.id);
-    
+
+    if (!id) {
+        return res.status(400).json({ erro: 'ID inválido' });
+    }
+
+    const permissoes = req.body;
+
+    try {
+        await usuarios.editarPermissoes(id, permissoes);
+        return res.status(200).json({ mensagem: 'Permissões atualizadas com sucesso' });
+    } catch (err) {
+        console.error('Erro ao atualizar permissões:', err);
+        return res.status(500).json({ erro: 'Erro interno ao atualizar permissões' });
+    }
+});
+
+
+
+
+app.get('/usuario/permissoes/:id', async(req,res) => {
+    const id = parseInt(req.params.id);
     if(!id){
         return res.status(400).json({ mensagem: 'id inválido'})
     }
@@ -237,6 +268,8 @@ app.read('/usuario/permissoes:id', async(req,res) => {
     const listPermissoes = await usuarios.permissoes(id);
     res.json(listPermissoes);
 })
+
+
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;

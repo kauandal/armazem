@@ -16,27 +16,27 @@ async function read() {
 async function create(nome, hash, email, imagem, permissao, localizacao) {
     try {
         let conn = await pool.getConnection();
-        result = await conn.query(
+        const result = await conn.query(
             'INSERT INTO users (nome, hash, email, imagem, permissao, localizacao) VALUES (?, ?, ?, ?, ?, ?)',
             [nome, hash, email, imagem, permissao, localizacao]
         );
 
-        if(permissao == 0){
+        if (permissao == 0) {
             await conn.query(
-            'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [result.insertId, 0, 1, 1, 1, 1, 1]
+                'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, editar_equipamentos, cadastro_equipamentos, empresas, usuarios, multi_filial) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [result.insertId, 0, 1, 1, 1, 1, 1, 1, 1]
             );
         }
-        else if(permissao == 1){
+        else if (permissao == 1) {
             await conn.query(
-            'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [result.insertId, 1, 1, 1, 1, 1, 0]
+                'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, editar_equipamentos, cadastro_equipamentos, empresas, usuarios, multi_filial) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [result.insertId, 1, 1, 1, 1, 1, 1, 0, 0]
             );
         }
-        else{
+        else {
             await conn.query(
-            'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [result.insertId, 2, 1, 1, 0, 0, 0]
+                'INSERT INTO permissoes (id, permissao, visualizacao_equipamentos, visualizacao_computadores, editar_equipamentos, cadastro_equipamentos, empresas, usuarios, multi_filial) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [result.insertId, 2, 1, 1, 0, 0, 0, 0, 0]
             );
         }
 
@@ -84,25 +84,59 @@ async function login(username, password) {
 
     try {
         const conn = await pool.getConnection();
-        const rows = await conn.query('SELECT * FROM users WHERE hash = ?', [hashLogin]);
+        const rows = await conn.query(`
+            SELECT 
+                u.id,
+                u.nome,
+                u.email,
+                u.imagem,
+                u.localizacao,
+                p.visualizacao_equipamentos,
+                p.visualizacao_computadores,
+                p.editar_equipamentos,
+                p.cadastro_equipamentos,
+                p.empresas,
+                p.usuarios,
+                p.multi_filial
+            FROM 
+                users u
+            JOIN 
+                permissoes p ON u.id = p.id
+            WHERE 
+                u.hash = ?
+        `, [hashLogin]);
+
         conn.release();
 
         const usuarioEncontrado = rows.length > 0;
-        
-        return {
-            sucesso: usuarioEncontrado,
-            permission: usuarioEncontrado ? rows[0].permissao : null,
-            name: usuarioEncontrado ? rows[0].nome : null,
-            image: usuarioEncontrado ? rows[0].imagem : null,
-            localizacao: usuarioEncontrado ? rows[0].localizacao : null
+
+          if (!usuarioEncontrado) {
+            return { sucesso: false, erro: 'Usuário não encontrado' };
+        }
+
+       const user = rows[0];
+        const permission = {
+            visualizacao_equipamentos: user.visualizacao_equipamentos,
+            visualizacao_computadores: user.visualizacao_computadores,
+            editar_equipamentos: user.editar_equipamentos,
+            cadastro_equipamentos: user.cadastro_equipamentos,
+            empresas: user.empresas,
+            usuarios: user.usuarios,
+            multi_filial: user.multi_filial
         };
+
+        return {
+            sucesso: true,
+            permission,
+            name: user.nome,
+            image: user.imagem,
+            localizacao: user.localizacao
+        };
+
 
     } catch (err) {
         console.error('Erro no login:', err);
-        return {
-            sucesso: false,
-            permissao: null
-        };
+        return { sucesso: false, erro: 'Erro no servidor' };
     }
 }
 
@@ -110,7 +144,7 @@ async function permissoes(id) {
 
     try {
         let conn = await pool.getConnection();
-        const permissoes = await conn.query('SELECT permissao, visualizacao_equipamentos, visualizacao_computadores, cadastro_equipamentos, empresas, usuarios FROM permissoes WHERE id = ?', [id]);
+        const permissoes = await conn.query('SELECT permissao, visualizacao_equipamentos, visualizacao_computadores, editar_equipamentos, cadastro_equipamentos, empresas, usuarios, multi_filial FROM permissoes WHERE id = ?', [id]);
         if (conn) conn.release();
         return permissoes;
 
@@ -120,7 +154,50 @@ async function permissoes(id) {
     }
 }
 
+async function editarPermissoes(id, permissoes) {
+    const {
+        visualizacao_equipamentos,
+        visualizacao_computadores,
+        editar_equipamentos,
+        cadastro_equipamentos,
+        empresas,
+        usuarios,
+        multi_filial
+    } = permissoes;
+
+    try {
+        const conn = await pool.getConnection();
+
+        await conn.query(`
+            UPDATE permissoes
+            SET visualizacao_equipamentos = ?,
+                visualizacao_computadores = ?,
+                editar_equipamentos = ?,
+                cadastro_equipamentos = ?,
+                empresas = ?,
+                usuarios = ?,
+                multi_filial = ?
+            WHERE id = ?
+        `, [
+            visualizacao_equipamentos,
+            visualizacao_computadores,
+            editar_equipamentos,
+            cadastro_equipamentos,
+            empresas,
+            usuarios,
+            multi_filial,
+            id
+        ]);
+
+        conn.release();
+        return { mensagem: 'Permissões atualizadas com sucesso' };
+
+    } catch (err) {
+        console.error('Erro ao atualizar permissões:', err);
+        throw err;
+    }
+}
 
 
 
-module.exports = { pool, put, read, create, deletar, login, permissoes }
+module.exports = { pool, put, read, create, deletar, login, permissoes, editarPermissoes }
