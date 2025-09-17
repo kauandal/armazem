@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Login - Armazém</title>
     <link rel="stylesheet" href="style.css">
-     <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="login-page">
@@ -21,34 +20,35 @@
 
     <script>
         function login(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-    fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    })
-    .then(res => {
-        if (res.ok) {
-            return res.json();
-        } else {
-            throw new Error("Usuário ou senha inválidos.");
+            fetch('http://localhost:8080/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+                .then(res => {
+                    if (res.ok) {
+                        return res.json();
+                    } else {
+                        throw new Error("Usuário ou senha inválidos.");
+                    }
+                })
+                .then(data => {
+                    sessionStorage.setItem("permission", JSON.stringify(data.permission));
+                    sessionStorage.setItem("name", data.name);
+                    sessionStorage.setItem("image", data.image);
+                    sessionStorage.setItem("filial", data.localizacao);
+                    sessionStorage.setItem("auth", "true");
+                    window.location.href = "index.html";
+                })
+                .catch(err => {
+                    document.getElementById("error-msg").textContent = "Sem conexão ao banco";
+                });
         }
-    })
-    .then(data => {
-        sessionStorage.setItem("permission", data.permission)
-        sessionStorage.setItem("name", data.name)
-        sessionStorage.setItem("image", data.image)
-        sessionStorage.setItem("auth", "true");
-        window.location.href = "index.html";
-    })
-    .catch(err => {
-        document.getElementById("error-msg").textContent = err.message;
-    });
-}
 
         // Se já estiver logado, vai direto para o index
         if (sessionStorage.getItem("auth")) {

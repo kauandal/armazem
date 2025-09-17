@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Visualização</title>
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+  
+  <body>
+    <div class="filtro-container">
+        <input type="text" id="filtroEmpresa" list="listaEmpresas" placeholder="Filtrar por Filial" />
+        <datalist id="listaEmpresas"></datalist>
+
+        <input type="text" id="filtroCategoria" list="listaCategorias" placeholder="Filtrar por Categoria" />
+        <datalist id="listaCategorias"></datalist>
+
+        <button type="button" id="btnFiltro" class="botao">
+            <i class='bx bx-filter'></i> Filtrar
+        </button>
+        <button type="button" class="botao" id="btnAtualizar">
+            <i class='bx bx-refresh-cw'></i> Atualizar Lista
+        </button>
+
+    </div>
+
+    <div class="container">
+        <h3>Computadores cadastrados</h3>
+        <table id="listaComputadores">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Especificações</th>
+                    <th>Quantidade</th>
+                    <th>Memória</th>
+                    <th>Processador</th>
+                    <th>Armazenamento</th>
+                    <th>Fonte</th>
+                    <th>Localização</th>
+                    <th id ="colunaAcoes">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="botoes-piso">
+        <button type="button" class="botao" id="btnAtualizar"> <i class='bx  bx-refresh-cw'></i> Atualizar</button>
+    </div>
+
+    <div class="modal" id="modalEdicao">
+        <div class="modal-content">
+            <h2>Editar Computador</h2>
+            <input type="text" id="categoriaEdicao" placeholder="Categoria do Computador" />
+            <input type="text" id="especEdicao" placeholder="Especificações do Computador" />
+            <input type="number" id="quantidadeEdicao" placeholder="Quantidade de Computadores" />
+            <input type="text" id="memoriaEdicao" placeholder="Memória do Computador" />
+            <input type="text" id="processadorEdicao" placeholder="Processador do Computador" />
+            <input type="text" id="armazenamentoEdicao" placeholder="Armazenamento do Computador" />
+            <input type="text" id="fonteEdicao" placeholder="Fonte do Computador" />
+            <input type="text" id="localizacaoEdicao" list="listaEmpresas" placeholder="Localizacao do Computador" />
+            <datalist id="listaEmpresas"></datalist>
+            <div class="modal-buttons">
+                <button onclick="fecharEdicao()">Cancelar</button>
+                <button onclick="salvaComputador()">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

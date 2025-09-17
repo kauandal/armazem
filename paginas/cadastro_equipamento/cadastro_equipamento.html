@@ -16,9 +16,10 @@
             <input type="text" id="modelo" placeholder="Modelo" />
             <input type="text" id="estado" placeholder="Estado (OK - NF)" />
             <input type="number" id="qtd" placeholder="Quantidade" />
-             <input type="text" id="local" list="listaEmpresas" placeholder="Localizacao" />
-                <datalist id="listaEmpresas"></datalist>
+            <input type="text" id="local" list="listaEmpresas" placeholder="Localizacao (Apenas selecione)" />
+            <datalist id="listaEmpresas"></datalist>
             <input type="text" id="marca" placeholder="Marca" />
+            <p id="message"></p>
 
             <div class="botoes-piso">
                 <button type="button" class="botao" onclick="cadastrarEquipamento()">Cadastrar</button>
@@ -27,11 +28,16 @@
 
         <div class="container">
             <h2>Cadastrar Computadores</h2>
-            <input type="text" id="categoriaPC" placeholder="Categoria do Equipamento" />
-            <input type="text" id="modeloPC" placeholder="Modelo" />
-            <input type="text" id="estadoPC" placeholder="Estado (OK - NF)" />
-            <input type="number" id="qtdPC" placeholder="Quantidade" />
-
+            <input type="text" id="categoriaPC" placeholder="Categoria do (Notebook, Desktop, miniPC etc...)" />
+            <input type="text" id="especPC" placeholder="Especificações da máquina (Algum detalhe ou comentário)" />
+            <input type="number" id="qtdPC" placeholder="Quantidade de PCs" />
+            <input type="text" id="memoriaPC" placeholder="Memoria RAM" />
+            <input type="text" id="processadorPC" placeholder="Processador instalado" />
+            <input type="text" id="armazenamentoPC" placeholder="Quantidade de armazenamento" />
+            <input type="text" id="fontePC" placeholder="Fonte" />
+            <input type="text" id="localPC" list="listaEmpresas" placeholder="Localizacao (Apenas selecione)" />
+            <datalist id="listaEmpresas"></datalist>
+            <p id="messageComputer"></p>
 
             <div class="botoes-piso">
                 <button type="button" class="botao" onclick="cadastrarComputador()">Cadastrar</button>

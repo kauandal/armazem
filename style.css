@@ -1,29 +1,122 @@
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    /* Para empilhar o texto e a imagem */
+    align-items: center;
+    /* Centraliza horizontalmente */
+    justify-content: center;
+    /* Centraliza verticalmente */
+    padding: 25px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #444;
+    background-image: url('/imagens/armazem.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 70px;
+
+}
+
+.logo-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 43, 68, 0.7);
+    /* Cor de fundo com transparência */
+    z-index: 0;
+}
+
+.logo-container>* {
+    position: relative;
+    z-index: 1;
+}
+
+.logo-container h2 {
+    font-size: 35px;
+    margin: 0;
+    line-height: 1;
+    color: white;
+    text-align: center;
+    /* Garante melhor alinhamento vertical */
+}
+
+.logoIts {
+    width: 150px;
+    height: auto;
+    border-radius: 4px;
+    object-fit: contain;
+}
+
+.toggle-tab {
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    /* fica fora da sidebar */
+    width: 25px;
+    height: 50px;
+    background-color: #34495e;
+    color: white;
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.toggle-tab:hover {
+    right: -30px;
+    /* move mais pra fora ao passar o mouse */
+    width: 45px;
+    /* aumenta um pouco */
+    background-color: #16a085;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
+}
+
+.sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: visible;
+}
+
+.sidebar.collapsed h2,
+.sidebar.collapsed .menu-title,
+.sidebar.collapsed .logo-container,
+.sidebar.collapsed .menu,
+.sidebar.collapsed .sidebar-footer,
+.sidebar.collapsed .submenu,
+.sidebar.collapsed .toggle-btn {
+    display: none;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
     height: 100vh;
+    position: relative;
+    overflow-x: hidden;
 }
 
 .sidebar {
     width: 240px;
-    background-color: #2c3e50;
+    background-color: #102b44;
     color: white;
     padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* <- Isso posiciona o rodapé no fim */
     overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 10;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transition: width 0.4s ease;
 }
 
-.sidebar h2 {
-    margin-bottom: 20px;
-    font-size: 22px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 10px;
-}
 
 .menu {
     margin-bottom: 10px;
@@ -39,13 +132,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: box-shadow 0.3s ease;
 }
 
 .menu-title:hover {
     background-color: #1abc9c;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #fff;
 
 }
@@ -61,6 +154,7 @@ body {
 
 .menu-title.open {
     background-color: #16a085;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
     color: white;
 }
 
@@ -74,6 +168,7 @@ body {
     margin-left: 10px;
     padding-left: 10px;
     border-left: 2px solid #1abc9c;
+    /* border-left: 2px solid #F15A29;  para a cor laranja da empresa*/
 }
 
 .submenu.active {
@@ -93,18 +188,24 @@ body {
 
 .submenu a:hover {
     background-color: #1abc9c;
+    /* background-color: #F15A29;  para a cor laranja da empresa*/
     transform: translateX(5px);
 }
 
 .content {
     flex: 1;
     background-color: #ecf0f1;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
 }
 
 iframe {
     width: 100%;
     height: 100%;
     border: none;
+    flex: 1;
+    overflow: hidden;
 }
 
 body.login-page {
@@ -211,7 +312,7 @@ body.login-page {
 }
 
 .user-box {
-    background-color: #1c2b3a;
+    background-color: #34495e;
     padding: 10px;
     border-radius: 8px;
     text-align: center;
@@ -225,6 +326,7 @@ body.login-page {
     object-fit: cover;
     display: block;
     margin: 0 auto 5px auto;
+    margin-top: 10px;
 }
 
 .nome-usuario {

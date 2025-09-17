@@ -56,4 +56,17 @@ async function put(id, nome, cidade, estado, cnpj, rua, numero, complemento, cep
 
 }
 
-module.exports = { put, read, deletar, pool, create }
+async function nomes() {
+    try {
+        let conn = await pool.getConnection();
+        const value = await conn.query('SELECT nome FROM empresa');
+        if (conn) conn.release();
+        return (value);
+    } catch (err) {
+        console.error(err);
+        return { mensagem: 'Erro ao listar nomes' };
+    }
+
+}
+
+module.exports = { put, read, deletar, pool, create, nomes }

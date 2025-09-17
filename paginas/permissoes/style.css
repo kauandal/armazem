@@ -21,16 +21,6 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.container2 {
-  max-width: 700px;
-  margin: 0 auto;
-  margin-top: 30px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
 .container h3 {
   text-align: center;
   margin-bottom: 20px;
@@ -54,14 +44,6 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.btnDelete {
-  background-color: #e74c3c;
-}
-
-.btnDelete:hover {
-  background-color: #c0392b;
-}
-
 .btnUpdate {
   background-color: #3498db;
 }
@@ -70,7 +52,6 @@ body {
   background-color: #2980b9;
 }
 
-/* Botões superiores */
 .botoes-piso {
   display: flex;
   justify-content: center;
@@ -78,7 +59,7 @@ body {
   margin-top: 10px;
 }
 
-.botao, .btnView {
+.botao {
   background-color: #2ecc71;
   border: none;
   color: white;
@@ -89,7 +70,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.botao:hover, .btnView:hover {
+.botao:hover {
   background-color: #27ae60;
 }
 
@@ -123,14 +104,58 @@ body {
   color: #34495e;
 }
 
-.modal-content input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
+/* Agrupamento dos campos de permissão */
+.modal-content label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 10px 15px;
+  margin-bottom: 12px;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 15px;
+  color: #2c3e50;
+  border: 1px solid #e0e0e0;
+  transition: background-color 0.3s ease;
 }
+
+.modal-content label:hover {
+  background-color: #ecf0f1;
+}
+
+/* Checkbox */
+.modal-content input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #2ecc71; /* muda a cor principal do checkbox */
+  cursor: pointer;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .modal-content {
+    padding: 20px 15px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-buttons button {
+    width: 100%;
+  }
+
+  .modal-content label {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal-content input[type="checkbox"] {
+    align-self: flex-end;
+  }
+}
+
 
 .modal-buttons {
   display: flex;
@@ -170,10 +195,6 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.info-item {
-    margin-bottom: 10px;
-}
-
 .usuario-item {
     display: flex;
     align-items: center;
@@ -204,31 +225,3 @@ body {
     position: absolute;
     right: 10px;
 }
-
-.permissoes {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 15px;
-}
-
-.permissoes label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  background-color: #ecf0f1;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-weight: 500;
-}
-
-.permissoes input[type="radio"] {
-  accent-color: #27ae60; /* cor do tema */
-  transform: scale(1.2);
-}
-
-.permissoes label:hover {
-  background-color: #d0d7db;
-}
-
